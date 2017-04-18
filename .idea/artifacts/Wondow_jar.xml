@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Wondow:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Wondow_jar</output-path>
+    <root id="archive" name="Wondow.jar">
+      <element id="module-output" name="Wondow" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../commons-csv-1.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jackson-dataformat-csv-2.4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jackson-databind-2.8.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jackson-core-2.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jackson-annotations-2.8.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

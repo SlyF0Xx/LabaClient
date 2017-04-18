@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/SlyFox/IdeaProjects/commons-csv-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/SlyFox/IdeaProjects/jackson-annotations-2.8.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/SlyFox/IdeaProjects/jackson-core-2.8.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/SlyFox/IdeaProjects/jackson-dataformat-csv-2.4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/SlyFox/IdeaProjects/jackson-databind-2.8.5.jar"/>
+	<classpathentry kind="output" path="out/production/Wondow"/>
+</classpath>
