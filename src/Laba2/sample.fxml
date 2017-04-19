@@ -21,7 +21,6 @@
         </Menu>
       </menus>
     </MenuBar>
-    <TextField id="Fillter" fx:id="FilterName" layoutX="0.0" onAction="#Filter" prefWidth="71.00009999999747" text="" AnchorPane.topAnchor="22.0" />
     <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="968.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="44.0">
       <children>
         <TableView fx:id="table" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="1.0" prefHeight="-1.0" prefWidth="930.0" tableMenuButtonVisible="false" HBox.hgrow="ALWAYS">
@@ -69,14 +68,7 @@
         </ToolBar>
       </children>
     </VBox>
-    <TextField fx:id="FilterLegCount" layoutX="72.0" onAction="#Filter" prefWidth="71.00009999999747" AnchorPane.topAnchor="22.0" />
-    <TextField fx:id="FilterLegIndex" layoutX="144.0" onAction="#Filter" prefWidth="91.0" AnchorPane.topAnchor="22.0" />
-    <TextField fx:id="FilterLegSize" layoutX="235.0" onAction="#Filter" prefWidth="88.0" AnchorPane.topAnchor="22.0" />
-    <TextField id="FilterLegBarefoot" fx:id="FilterLegWashed" layoutX="323.0" onAction="#Filter" prefWidth="109.0" AnchorPane.topAnchor="22.0" />
-    <TextField fx:id="FilterLegBarefoot" layoutX="432.0" onAction="#Filter" prefWidth="93.0" AnchorPane.topAnchor="22.0" />
-    <TextField fx:id="FilterLocationName" layoutX="525.0" onAction="#Filter" prefWidth="175.0" AnchorPane.topAnchor="22.0" />
-    <TextField fx:id="FilterCame" layoutX="700.0" onAction="#Filter" prefWidth="75.0" AnchorPane.topAnchor="22.0" />
-    <TextField fx:id="FilterWait" layoutX="775.0" onAction="#Filter" prefWidth="75.0" AnchorPane.topAnchor="22.0" />
-    <Button layoutX="850.0" layoutY="22.0" mnemonicParsing="false" onAction="#Filter" prefWidth="75.0" text="Filter" />
+    <Button fx:id="FilterButton" layoutX="850.0" layoutY="22.0" mnemonicParsing="false" prefWidth="75.0" text="Filter" />
+    <Button mnemonicParsing="false" onAction="#CreateFilter" prefWidth="29.0" text="..." AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="22.0" />
   </children>
 </AnchorPane>

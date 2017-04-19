@@ -15,6 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -28,64 +30,40 @@ import java.io.IOException;
 import java.util.IllegalFormatException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
 
 public class Controller {
     @FXML
     private TableView<Person> table;
 
-    @FXML
-    private TableColumn<Person, String> Name;
+    public TableView<Person> GetTable(){return table;}
 
     @FXML
-    private TextField FilterName;
+    private TableColumn<Person, String> Name;
 
     @FXML
     private TableColumn<Person, String> LegCount;
 
     @FXML
-    private TextField FilterLegCount;
-
-    @FXML
     private TableColumn<Person, String> LegIndex;
-
-    @FXML
-    private TextField FilterLegIndex;
 
     @FXML
     private TableColumn<Person, String> LegSize;
 
     @FXML
-    private TextField FilterLegSize;
-
-    @FXML
     private TableColumn<Person, String> LegWashed;
-
-    @FXML
-    private TextField FilterLegWashed;
 
     @FXML
     private TableColumn<Person, String> LegBarefoot;
 
     @FXML
-    private TextField FilterLegBarefoot;
-
-    @FXML
     private TableColumn<Person, String> LocationName;
-
-    @FXML
-    private TextField FilterLocationName;
 
     @FXML
     private TableColumn<Person, String> Came;
 
     @FXML
-    private TextField FilterCame;
-
-    @FXML
     private TableColumn<Person, String> Wait;
-
-    @FXML
-    private TextField FilterWait;
 
     @FXML
     private TableColumn<Person, String> Delete;
@@ -111,7 +89,12 @@ public class Controller {
     @FXML
     private ColorPicker ColorChoose;
 
+    @FXML
+    private Button FilterButton;
+
     private  Laba0 main;
+    private Stage mainStage;
+    private FilterController controller;
 
     public StringProperty GetVisualParametr(Object param) {return new SimpleStringProperty(param.toString());}
 
@@ -244,35 +227,19 @@ public class Controller {
                 //table.scrollTo((int) new_val);
             }
         });
-    }
 
-    public void Filter()
-    {
-        table.getItems().clear();
-
-        People.GetPersons().forEach((str, pers)->{
-
-            //FilterName.getUserData() != null ? ((!pers.GetName().equals(FilterName.getUserData()) ) ? return; : return;) : System.out.print("");
-
-            if(!FilterName.getText().equals("")) if(!pers.GetName().equals(FilterName.getText())) return;
-
-            if(!FilterLegCount.getText().equals("")) if (pers.GetLegCount() != (Integer.valueOf(FilterLegCount.getText()))) return;
-
-            if(!FilterLegIndex.getText().equals("")) if(!LegIndex.getCellObservableValue(pers).getValue().equals(FilterLegIndex.getText())) return;
-
-            if(!FilterLegBarefoot.getText().equals("")) if(pers.GetLegs()[Integer.valueOf(LegIndex.getCellObservableValue(pers).getValue())].IsBarefoot() != Boolean.valueOf(FilterLegBarefoot.getText())) return;
-
-            if(!FilterLegSize.getText().equals("")) if(pers.GetLegs()[Integer.valueOf(LegIndex.getCellObservableValue(pers).getValue())].GetSize() != Leg.Size.valueOf(FilterLegSize.getText())) return;
-
-            if(!FilterLegWashed.getText().equals("")) if(pers.GetLegs()[Integer.valueOf(LegIndex.getCellObservableValue(pers).getValue())].IsWashed() != Boolean.valueOf(FilterLegWashed.getText())) return;
-
-            if(!FilterLocationName.getText().equals("")) if(!pers.GetPlace().GetPosition().equals(FilterLocationName.getText())) return;
-
-            if(!FilterCame.getText().equals("")) if(pers.IsCame() != Boolean.valueOf(FilterCame.getText())) return;
-
-            if(!FilterWait.getText().equals("")) if(pers.IsWait() != Boolean.valueOf(FilterWait.getText())) return;
-
-            table.getItems().add(pers);
+        FilterButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(controller!=null)
+                {
+                    Filter(controller.GetInfo());
+                }
+                else
+                {
+                    Filter(null);
+                }
+            }
         });
     }
 
@@ -326,6 +293,86 @@ public class Controller {
         else
         {
         }*/
+    }
+
+    public void CreateFilter() {
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("Filter.fxml"));
+
+        Parent root = null;
+        try {
+            root = loader.load();
+            Stage FilterStage = new Stage();
+            FilterStage.setTitle("Laba");
+            FilterStage.setScene(new Scene(root, 600, 422));
+            FilterStage.initOwner(mainStage);
+            FilterStage.setResizable(false);
+
+            controller = loader.getController();
+            controller.SetMain(this, FilterStage);
+
+            FilterStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void Filter(FilterStruct filter)
+    {
+        table.getItems().clear();
+
+        People.GetPersons().forEach((str, pers)->{
+            if(!filter.GetName().equals("") && filter.GetName()!=null && !pers.GetName().equals(filter.GetName())) return;
+
+            if(!filter.GetLocationName().equals("") && filter.GetLocationName()!=null && !pers.GetPlace().GetPosition().equals(filter.GetLocationName())) return;
+
+            if(pers.GetLegs().length<filter.GetMinCountLeg() || pers.GetLegs().length>filter.GetMaxCountLeg()) return;
+
+            boolean LegSizeAllFlag = false;
+            boolean LegWashedAllFlag = false;
+            boolean LegBarefootAllFlag = false;
+
+            for(Leg i: pers.GetLegs())
+            {
+                if (filter.IsLegSizeAll())
+                {
+                    if(!filter.GetLegSize().matcher(i.GetSize().toString()).matches()) return;
+                }
+                else
+                {
+                    if(filter.GetLegSize().matcher(i.GetSize().toString()).matches()) LegSizeAllFlag = true;
+                }
+
+                if(filter.IsLegBarefootAll())
+                {
+                    if(!filter.GetLegBarefoot().matcher(String.valueOf(i.IsBarefoot())).matches()) return;
+                }
+                else
+                {
+                    if(filter.GetLegBarefoot().matcher(String.valueOf(i.IsBarefoot())).matches()) LegBarefootAllFlag = true;
+                }
+
+                if(filter.IsLegWashedAll())
+                {
+                    if(!filter.GetLegWashed().matcher(String.valueOf(i.IsWashed())).matches()) return;
+                }
+                else
+                {
+                    if(filter.GetLegWashed().matcher(String.valueOf(i.IsWashed())).matches()) LegWashedAllFlag = true;
+                }
+            }
+
+            if(!filter.GetCame().matcher(String.valueOf(pers.IsCame())).matches()) return;
+            if(!filter.GetWait().matcher(String.valueOf(pers.IsWait())).matches()) return;
+
+
+            if((filter.IsLegSizeAll() || LegSizeAllFlag) &&
+                    (filter.IsLegWashedAll() || LegWashedAllFlag) &&
+                    (filter.IsLegBarefootAll() || LegBarefootAllFlag))
+            table.getItems().add(pers);
+        });
     }
 
     public void Execute()
@@ -389,8 +436,9 @@ public class Controller {
 
     ObservableList<Person> data2 = FXCollections.observableList(new LinkedList<Person>(People.GetPersons().values()));
 
-    public void setMain(Laba0 main)
+    public void setMain(Laba0 main, Stage mainStage)
     {
+        this.mainStage = mainStage;
         this.main = main;
 
         ObservableList<Person>  data =  FXCollections.observableArrayList();

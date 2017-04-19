@@ -43,7 +43,6 @@ public class Laba0
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("sample.fxml"));
@@ -54,7 +53,7 @@ public class Laba0
 
 
         Controller controller = loader.getController();
-        controller.setMain(this);
+        controller.setMain(this, primaryStage);
 
         primaryStage.heightProperty().addListener(new ChangeListener() {
             @Override

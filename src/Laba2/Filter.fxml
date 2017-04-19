@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0000999999975" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Laba2.FilterController">
+  <children>
+    <Label layoutX="142.0" layoutY="41.0" text="Имя">
+      <font>
+        <Font size="14.0" fx:id="x1" />
+      </font>
+    </Label>
+    <TextField fx:id="FilterName" layoutX="13.0" layoutY="60.0" prefWidth="286.0" />
+    <TextField fx:id="FilterLocationName" layoutX="299.0" layoutY="60.0" prefWidth="286.0" />
+    <Label font="$x1" layoutX="387.0" layoutY="41.0" text="Местоположение" />
+    <Label font="$x1" layoutX="269.0" layoutY="82.0" text="Кол-во ног" />
+    <TextField fx:id="FilterMinCountLeg" layoutX="13.0" layoutY="101.0" prefWidth="286.0" promptText="min" text="" />
+    <TextField fx:id="FilterMaxCountLeg" layoutX="299.0" layoutY="101.0" prefWidth="286.0" promptText="max" text="" />
+    <Label font="$x1" layoutX="64.0" layoutY="123.0" text="Размер ног" />
+    <Label font="$x1" layoutX="251.0" layoutY="123.0" text="Вымытость ног" />
+    <Label font="$x1" layoutX="437.0" layoutY="123.0" prefWidth="98.0" text="Обутость ног" />
+    <Label font="$x1" layoutX="132.0" layoutY="277.0" prefHeight="15.9609375" text="Приход" />
+    <Label font="$x1" layoutX="410.0" layoutY="277.0" text="Ожидание" />
+    <Pane layoutX="47.0" layoutY="163.0" prefHeight="114.0" prefWidth="114.0">
+      <children>
+        <CheckBox fx:id="FilterLegSizeBig" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefWidth="73.0" text="Большие" />
+        <CheckBox fx:id="FilterLegSizeMedium" layoutX="14.0" layoutY="49.0" mnemonicParsing="false" prefWidth="73.0" text="Средние" />
+        <CheckBox fx:id="FilterLegSizeSmall" layoutX="14.0" layoutY="84.0" mnemonicParsing="false" prefWidth="83.0" text="Маленькие" />
+      </children>
+    </Pane>
+    <Pane layoutX="246.0" layoutY="163.0" prefHeight="114.0" prefWidth="107.0">
+      <children>
+        <CheckBox fx:id="FilterLegWashedTrue" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefWidth="73.0" text="Вымыты" />
+        <CheckBox fx:id="FilterLegWashedFalse" alignment="TOP_RIGHT" allowIndeterminate="false" contentDisplay="LEFT" indeterminate="false" layoutX="14.0" layoutY="84.0" mnemonicParsing="false" prefWidth="83.0" selected="false" text="Не вымыты" textAlignment="LEFT" underline="false" />
+      </children>
+    </Pane>
+    <Pane layoutX="436.0" layoutY="163.0" prefHeight="114.0" prefWidth="83.0">
+      <children>
+        <CheckBox fx:id="FilterLegBarefootTrue" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="62.0" text="Обуты" />
+        <CheckBox fx:id="FilterLegBarefootFalse" alignment="CENTER_LEFT" layoutX="14.0" layoutY="81.0" mnemonicParsing="false" prefWidth="62.0" text="Разуты" textAlignment="LEFT" />
+      </children>
+    </Pane>
+    <Pane layoutX="97.0" layoutY="299.0" prefHeight="84.0" prefWidth="118.0">
+      <children>
+        <CheckBox fx:id="FilterCameTrue" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="98.0" text="Произошёл" />
+        <CheckBox fx:id="FilterCameFalse" layoutX="14.0" layoutY="54.0" mnemonicParsing="false" prefWidth="107.0" text="Не произошёл" />
+      </children>
+    </Pane>
+    <Pane layoutX="399.0" layoutY="299.0" prefHeight="84.0" prefWidth="90.0">
+      <children>
+        <CheckBox fx:id="FilterWaitTrue" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefWidth="68.0" text="Ждёт" />
+        <CheckBox fx:id="FilterWaitFalse" layoutX="14.0" layoutY="54.0" mnemonicParsing="false" prefWidth="73.0" text="Не ждёт" />
+      </children>
+    </Pane>
+    <Label layoutX="233.0" layoutY="14.0" text="Выберите фильтры">
+      <font>
+        <Font size="15.0" />
+      </font>
+    </Label>
+    <Button layoutX="470.0" layoutY="383.0" mnemonicParsing="false" text="Отмена" />
+    <Button layoutX="548.0" layoutY="383.0" mnemonicParsing="false" onAction="#FilterAndClose" text="OK" />
+    <ToggleButton fx:id="FilterLegSizeAll" layoutX="35.0" layoutY="142.0" mnemonicParsing="false" text="Полные совпадения" />
+    <ToggleButton fx:id="FilterLegWashedAll" layoutX="233.0" layoutY="142.0" mnemonicParsing="false" text="Полные совпадения" />
+    <ToggleButton fx:id="FilterLegBarefootAll" layoutX="415.0" layoutY="142.0" mnemonicParsing="false" text="Полные совпадения" />
+  </children>
+</AnchorPane>
