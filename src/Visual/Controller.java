@@ -8,18 +8,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -31,7 +27,7 @@ public class Controller {
     @FXML
     private TableView<Person> table;
 
-    public TableView<Person> GetTable(){return table;}
+    //public TableView<Person> GetTable(){return table;}
 
     @FXML
     private TableColumn<Person, String> Name;
@@ -64,7 +60,7 @@ public class Controller {
     private TableColumn<Person, Button> Delete;
 
     @FXML
-    private TableColumn<Person, ComboBox<String>> Actions;
+    private TableColumn<Person, MenuButton> Actions;
 
     @FXML
     private ComboBox<Command> BoxCommands;
@@ -101,7 +97,7 @@ public class Controller {
     {
         table.setFixedCellSize(45.0);
 
-        table.setItems(data2);
+        table.setItems(VisualPersonData);
 
         Commands commands = new Commands();
 
@@ -158,10 +154,10 @@ public class Controller {
         };
         });
 
-        Actions.setCellFactory(column->{return new TableCell<Person, ComboBox<String>>()
+        Actions.setCellFactory(column-> new TableCell<Person, MenuButton>()
         {
             @Override
-            protected void updateItem(ComboBox item, boolean empty)
+            protected void updateItem(MenuButton item, boolean empty)
             {
                 super.updateItem(item, empty);
                 if(empty)
@@ -170,30 +166,11 @@ public class Controller {
                 }
                 else
                 {
-                    item = new ComboBox();
+                    item = new MyMenu(Controller.this, getIndex()).menuButton;
                     item.setPrefHeight(table.getFixedCellSize());
-                    item.setItems(FXCollections.observableArrayList("came", "f"));
-                    //item.setPrefWidth(getWidth());
-
-                    ComboBox finalItem = item;
-                    item.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-                        @Override
-                        public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                            switch ((finalItem.getItems().get((Integer) number2).toString()))
-                            {
-                                case "came":
-                                {
-                                    table.getItems().get(getIndex()).Come(new Location(Text.getText()));
-                                    data2.set(getIndex(), People.GetPersons().get(table.getItems().get(getIndex()).GetName()));
-                                }
-                            }
-                        }
-                    });
-
                     setGraphic(item);
                 }
             }
-        };
         });
             Name.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetName()));
             LegCount.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegCount()));
@@ -209,16 +186,16 @@ public class Controller {
         Wait.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().IsWait()));
 
 
-        LocationName.setOnEditCommit(event -> data2.get(table.getSelectionModel().getSelectedIndex()).GetPlace().SetPosition(event.getNewValue()));
+        LocationName.setOnEditCommit(event -> VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).GetPlace().SetPosition(event.getNewValue()));
 
         LegBarefoot.setOnEditCommit(event ->
-                data2.get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetBarefoot(Boolean.parseBoolean(event.getNewValue())));
+                VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetBarefoot(Boolean.parseBoolean(event.getNewValue())));
 
         LegWashed.setOnEditCommit(event ->
-                data2.get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetWashed(Boolean.parseBoolean(event.getNewValue())));
+                VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetWashed(Boolean.parseBoolean(event.getNewValue())));
 
         LegSize.setOnEditCommit(event ->
-                data2.get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetSize(Leg.Size.valueOf(event.getNewValue())));
+                VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetSize(Leg.Size.valueOf(event.getNewValue())));
 
         LegIndex.setOnEditCommit(event -> {
             if(Integer.valueOf(event.getNewValue()) < table.getSelectionModel().getSelectedItem().GetLegCount() && Integer.valueOf(event.getNewValue()) >= 0)
@@ -235,11 +212,11 @@ public class Controller {
         Came.setOnEditCommit(event -> {
             if(Boolean.parseBoolean(event.getNewValue()))
             {
-                data2.get(table.getSelectionModel().getSelectedIndex()).Come(table.getSelectionModel().getSelectedItem().GetPlace());
+                VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).Come(table.getSelectionModel().getSelectedItem().GetPlace());
             }
         });
 
-        Wait.setOnEditCommit(event -> data2.get(table.getSelectionModel().getSelectedIndex()).SetWait(Boolean.parseBoolean(event.getNewValue())));
+        Wait.setOnEditCommit(event -> VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).SetWait(Boolean.parseBoolean(event.getNewValue())));
 
         Save.setOnAction(event -> Execute(new Save()));
 
@@ -432,8 +409,8 @@ public class Controller {
                     ObservableList<Person>  temp = FXCollections.observableList(new LinkedList<Person>(People.GetPersons().values()));
                     if(!table.getItems().equals(temp))
                     {
-                        data2.clear();
-                        data2.addAll(temp);
+                        VisualPersonData.clear();
+                        VisualPersonData.addAll(temp);
                         Zoom();
                     }
 
@@ -458,7 +435,9 @@ public class Controller {
         thread.start();
     }
 
-    ObservableList<Person> data2 = FXCollections.observableList(new LinkedList<Person>(People.GetPersons().values()));
+    ObservableList<Person> VisualPersonData = FXCollections.observableList(new LinkedList<Person>(People.GetPersons().values()));
+
+    ObservableList<Person> GetVisualPersonData(){return VisualPersonData;}
 
     public void setMain(Laba0 main, Stage mainStage)
     {
@@ -486,9 +465,9 @@ public class Controller {
             }
             People.AddPerson(temp);
 
-            if(data2.size()!=People.GetPersons().size())
+            if(VisualPersonData.size()!=People.GetPersons().size())
             {
-                data2.add(temp);
+                VisualPersonData.add(temp);
                 Zoom();
             }
         }
