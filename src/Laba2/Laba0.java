@@ -6,19 +6,17 @@
 package Laba2;
 import Cmd.*;
 import Exceptions.ExceptionWrongName;
+import Visual.Controller;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.Thread.UncaughtExceptionHandler;
 
 import static javafx.application.Application.launch;
 
@@ -43,27 +41,33 @@ public class Laba0
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+        try
+        {
+            FXMLLoader loader = new FXMLLoader();
 
-        loader.setLocation(getClass().getResource("sample.fxml"));
-
-        Parent root = loader.load();
-        primaryStage.setTitle("Laba");
-        primaryStage.setScene(new Scene(root, 300, 275));
-
-
-        Controller controller = loader.getController();
-        controller.setMain(this, primaryStage);
-
-        primaryStage.heightProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                controller.Zoom();
-            }
-        });
+            loader.setLocation(getClass().getResource("sample.fxml"));
+            Parent root = loader.load();
+            primaryStage.setTitle("Laba");
+            primaryStage.setScene(new Scene(root, 300, 275));
 
 
-        primaryStage.show();
+            Controller controller = loader.getController();
+            controller.setMain(this, primaryStage);
+
+            primaryStage.heightProperty().addListener(new ChangeListener() {
+                @Override
+                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                    controller.Zoom();
+                }
+            });
+
+
+            primaryStage.show();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
