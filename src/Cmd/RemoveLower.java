@@ -18,17 +18,20 @@ public class RemoveLower implements Command {
      */
     @Override
     public boolean execute(Object... objects) {
-        Object [] set = People.GetPersons().keySet().toArray();
-
-        for(int i=0;i<set.length;i++)
+        synchronized (Command.class)
         {
-            if(((String)set[i]).compareTo((String) objects[0])<0)
+            Object [] set = People.GetPersons().keySet().toArray();
+
+            for(int i=0;i<set.length;i++)
             {
-                //TODO exception на пустую коллекцию
-                People.GetPersons().remove(set[i]);
+                if(((String)set[i]).compareTo((String) objects[0])<0)
+                {
+                    //TODO exception на пустую коллекцию
+                    People.GetPersons().remove(set[i]);
+                }
             }
+            return false;
         }
-        return false;
     }
 
     @Override

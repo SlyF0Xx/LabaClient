@@ -1,8 +1,6 @@
 package Visual;
 
 import Laba2.Location;
-import Laba2.People;
-import Laba2.Person;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CustomMenuItem;
@@ -40,16 +38,16 @@ public class MyMenu {
         CameTextField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                owner.GetVisualPersonData().get(current).Come(new Location(CameTextField.getText()));
-                owner.GetVisualPersonData().set(current, People.GetPersons().get(owner.GetVisualPersonData().get(current).GetName()));
+                owner.model.GetVisualPersonData().get(current).Come(new Location(CameTextField.getText()));
+                owner.model.GetVisualPersonData().set(current, Updater.GetPerson(owner.model.GetVisualPersonData().get(current).GetName()));
             }
         });
 
         WaitTextField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                owner.GetVisualPersonData().get(current).Waiting(People.GetByName(WaitTextField.getText()));
-                owner.GetVisualPersonData().set(current, People.GetPersons().get(owner.GetVisualPersonData().get(current).GetName()));
+                owner.model.GetVisualPersonData().get(current).Waiting(Updater.GetPerson(WaitTextField.getText()));
+                owner.model.GetVisualPersonData().set(current, Updater.GetPerson(owner.model.GetVisualPersonData().get(current).GetName()));
             }
         });
 

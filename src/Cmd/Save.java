@@ -26,37 +26,40 @@ public class Save implements Command {
     @Override
     public boolean execute(Object... objects)throws IOException
     {
-        if(System.getenv().containsKey("ReadFileDir"))
+        synchronized (Command.class)
         {
-            File file = new File(System.getenv("ReadFileDir"));
-            if (!file.canWrite()) {
-                System.out.println("Нет прав доступа");
+            if(System.getenv().containsKey("ReadFileDir"))
+            {
+                File file = new File(System.getenv("ReadFileDir"));
+                if (!file.canWrite()) {
+                    System.out.println("Нет прав доступа");
+                }
+                else
+                {
+                    FileOutpuStreamToWriter writer = new FileOutpuStreamToWriter(System.getenv("ReadFileDir"));
+
+                    //FileOutpuStreamToWriter writer = new FileOutpuStreamToWriter("out.txt");
+
+                    CSVPrinter f = new CSVPrinter(writer, CSVFormat.RFC4180);
+
+
+                    for(Person person: People.GetPersons().values())
+                    {
+                        f.print(People.GetByName(person.GetName()).getClass().getName());
+
+                        Parser.bad_print(f,People.GetByName(person.GetName()));
+                        f.println();
+                    }
+
+                    writer.close();
+                }
+                return false;
             }
             else
             {
-                FileOutpuStreamToWriter writer = new FileOutpuStreamToWriter(System.getenv("ReadFileDir"));
-
-                //FileOutpuStreamToWriter writer = new FileOutpuStreamToWriter("out.txt");
-
-                CSVPrinter f = new CSVPrinter(writer, CSVFormat.RFC4180);
-
-
-                for(Person person: People.GetPersons().values())
-                {
-                    f.print(People.GetByName(person.GetName()).getClass().getName());
-
-                    Parser.bad_print(f,People.GetByName(person.GetName()));
-                    f.println();
-                }
-
-                writer.close();
+                System.out.println("Переменная окружения ReadFileDir отсутствует");
+                throw new FileNotFoundException();
             }
-            return false;
-        }
-        else
-        {
-            System.out.println("Переменная окружения ReadFileDir отсутствует");
-            throw new FileNotFoundException();
         }
     }
 

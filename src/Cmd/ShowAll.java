@@ -19,14 +19,16 @@ public class ShowAll implements Command {
     @Override
     public boolean execute(Object... objects) throws Exception
     {
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        for(Person person: People.GetPersons().values())
+        synchronized (Command.class)
         {
-            System.out.println(mapper.writeValueAsString(person));
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            for(Person person: People.GetPersons().values())
+            {
+                System.out.println(mapper.writeValueAsString(person));
+            }
+            return false;
         }
-        return false;
     }
 
     @Override

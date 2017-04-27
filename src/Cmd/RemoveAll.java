@@ -23,16 +23,19 @@ public class RemoveAll implements Command {
      */
     @Override
     public boolean execute(Object... objects) {
-        Object [] set = People.GetPersons().keySet().toArray();
-
-        for(int i=0;i<set.length;i++)
+        synchronized (Command.class)
         {
-            if(People.GetPersons().get(set[i]).equals((Person)objects[0]))
+            Object [] set = People.GetPersons().keySet().toArray();
+
+            for(int i=0;i<set.length;i++)
             {
-                People.GetPersons().remove(set[i]);
+                if(People.GetPersons().get(set[i]).equals((Person)objects[0]))
+                {
+                    People.GetPersons().remove(set[i]);
+                }
             }
+            return false;
         }
-        return false;
     }
 
     @Override

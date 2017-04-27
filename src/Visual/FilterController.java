@@ -72,7 +72,7 @@ public class FilterController {
 
     public void FilterAndClose()
     {
-        controller.Filter(this.GetInfo());
+        controller.model.Filter(this.GetInfo());
         FilterStage.close();
     }
 
@@ -83,23 +83,23 @@ public class FilterController {
                 FilterLocationName.getText(),
                 FilterMinCountLeg.getText().equals("")? Integer.MIN_VALUE: Integer.valueOf(FilterMinCountLeg.getText()),
                 FilterMaxCountLeg.getText().equals("")? Integer.MAX_VALUE: Integer.valueOf(FilterMaxCountLeg.getText()),
-                Pattern.compile((!FilterLegSizeBig.isSelected()&&!FilterLegSizeMedium.isSelected()&&!FilterLegSizeSmall.isSelected())? "(\\w|\\W)*":
+                Pattern.compile((!FilterLegSizeBig.isSelected()&&!FilterLegSizeMedium.isSelected()&&!FilterLegSizeSmall.isSelected())? ".*":
                         ((FilterLegSizeBig.isSelected()? Leg.Size.Big.toString() + "|" : "") +
                         (FilterLegSizeMedium.isSelected()? Leg.Size.Medium.toString() + "|" : "") +
                         (FilterLegSizeSmall.isSelected()? Leg.Size.Small.toString() : ""))),
-                Pattern.compile((!FilterLegWashedTrue.isSelected()&&!FilterLegWashedFalse.isSelected())? "(\\w|\\W)*":
+                Pattern.compile((!FilterLegWashedTrue.isSelected()&&!FilterLegWashedFalse.isSelected())? ".*":
                         ((FilterLegWashedTrue.isSelected()? "true|" : "") +
                         (FilterLegWashedFalse.isSelected()? "false" : ""))),
-                Pattern.compile((!FilterLegBarefootTrue.isSelected()&&!FilterLegBarefootFalse.isSelected())? "(\\w|\\W)*":
+                Pattern.compile((!FilterLegBarefootTrue.isSelected()&&!FilterLegBarefootFalse.isSelected())? ".*":
                         ((FilterLegBarefootTrue.isSelected()? "true|" : "") +
                         (FilterLegBarefootFalse.isSelected()? "false" : ""))),
                 FilterLegSizeAll.isSelected(),
                 FilterLegWashedAll.isSelected(),
                 FilterLegBarefootAll.isSelected(),
-                Pattern.compile((!FilterCameTrue.isSelected()&&!FilterCameFalse.isSelected())? "(\\w|\\W)*":
+                Pattern.compile((!FilterCameTrue.isSelected()&&!FilterCameFalse.isSelected())? ".*":
                         ((FilterCameTrue.isSelected()? "true|" : "") +
                                 (FilterCameFalse.isSelected()? "false" : ""))),
-                Pattern.compile((!FilterWaitTrue.isSelected()&&!FilterWaitFalse.isSelected())? "(\\w|\\W)*":
+                Pattern.compile((!FilterWaitTrue.isSelected()&&!FilterWaitFalse.isSelected())? ".*":
                         ((FilterWaitTrue.isSelected()? "true|" : "") +
                                 (FilterWaitFalse.isSelected()? "false" : "")))
         );

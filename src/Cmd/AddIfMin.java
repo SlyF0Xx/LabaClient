@@ -23,21 +23,24 @@ public class AddIfMin implements Command {
      */
     @Override
     public boolean execute(Object... objects) throws Exception {
-        Object [] set = People.GetPersons().keySet().toArray();
+        synchronized (Command.class)
+        {
+            Object [] set = People.GetPersons().keySet().toArray();
 
-        boolean flag = true;
-        for(int i=0;i<set.length;i++)
-        {
-            if(People.GetPersons().get(set[i]).compareTo(((Person)objects[0]))==0)
+            boolean flag = true;
+            for(int i=0;i<set.length;i++)
             {
-                flag = false;
+                if(People.GetPersons().get(set[i]).compareTo(((Person)objects[0]))==0)
+                {
+                    flag = false;
+                }
             }
+            if(flag)
+            {
+                People.AddPerson((Person)objects[0]);
+            }
+            return false;
         }
-        if(flag)
-        {
-            People.AddPerson((Person)objects[0]);
-        }
-        return false;
     }
 
     @Override

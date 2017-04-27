@@ -32,29 +32,32 @@ public class Load implements Command {
     @Override
     public boolean execute(Object... objects) throws FileNotFoundException, IOException,ClassNotFoundException, IllegalAccessException, InstantiationException
     {
-        if (System.getenv().containsKey("ReadFileDir")) {
-            File file = new File(System.getenv("ReadFileDir"));
-            if (!file.exists() || !file.canRead()) {
-                System.out.println("Не существует или нет прав доступа");
-            } else {
-                Scanner in = new Scanner(new File(System.getenv("ReadFileDir")));
-                //Scanner in = new Scanner(new File("out.txt"));
-                while (in.hasNextLine()) {
-                    CSVParser parser = CSVParser.parse(in.nextLine(), CSVFormat.RFC4180);
-                    List<CSVRecord> list = parser.getRecords();
+        synchronized (Command.class)
+        {
+            if (System.getenv().containsKey("ReadFileDir")) {
+                File file = new File(System.getenv("ReadFileDir"));
+                if (!file.exists() || !file.canRead()) {
+                    System.out.println("Не существует или нет прав доступа");
+                } else {
+                    Scanner in = new Scanner(new File(System.getenv("ReadFileDir")));
+                    //Scanner in = new Scanner(new File("out.txt"));
+                    while (in.hasNextLine()) {
+                        CSVParser parser = CSVParser.parse(in.nextLine(), CSVFormat.RFC4180);
+                        List<CSVRecord> list = parser.getRecords();
 
-                    Object MyObject = Class.forName(list.get(0).get(0)).newInstance();
+                        Object MyObject = Class.forName(list.get(0).get(0)).newInstance();
 
-                    Parser.func(MyObject, list, 1);
+                        Parser.func(MyObject, list, 1);
 
-                    People.AddPerson((Person) MyObject);
+                        People.AddPerson((Person) MyObject);
+                    }
+                    in.close();
                 }
-                in.close();
+                return false;
+            } else {
+                System.out.println("Переменная окружения ReadFileDir отсутствует");
+                throw new FileNotFoundException();
             }
-            return false;
-        } else {
-            System.out.println("Переменная окружения ReadFileDir отсутствует");
-            throw new FileNotFoundException();
         }
     }
 

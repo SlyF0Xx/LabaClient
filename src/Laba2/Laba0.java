@@ -48,6 +48,7 @@ public class Laba0
             loader.setLocation(getClass().getResource("sample.fxml"));
             Parent root = loader.load();
             primaryStage.setTitle("Laba");
+            primaryStage.setFullScreen(false);
             primaryStage.setScene(new Scene(root, 300, 275));
 
 

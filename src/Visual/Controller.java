@@ -21,13 +21,10 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.LinkedList;
 
 public class Controller {
     @FXML
     private TableView<Person> table;
-
-    //public TableView<Person> GetTable(){return table;}
 
     @FXML
     private TableColumn<Person, String> Name;
@@ -90,45 +87,12 @@ public class Controller {
     private Stage mainStage;
     private FilterController controller;
 
-    public StringProperty GetVisualParametr(Object param) {return new SimpleStringProperty(param.toString());}
+    Model model;
 
-    @FXML
-    private void initialize()
+    private StringProperty GetVisualParametr(Object param) {return new SimpleStringProperty(param.toString());}
+
+    private void CreateRowButtonDelete()
     {
-        table.setFixedCellSize(45.0);
-
-        table.setItems(VisualPersonData);
-
-        Commands commands = new Commands();
-
-        commands.SetCommand("add_if_min", new AddIfMin());
-        commands.SetCommand("remove_lower", new RemoveLower());
-        commands.SetCommand("remove_all", new RemoveAll());
-        commands.SetCommand("show_all", new ShowAll());
-        commands.SetCommand("save", new Save());
-        commands.SetCommand("load", new Load());
-        commands.SetCommand("exit", new Exit());
-
-        ObservableList<Command> info = FXCollections.observableArrayList();
-        for (Command i : commands.GetCommands().values()) {
-            info.add(i);
-        }
-
-        BoxCommands.setItems(info);
-
-
-        Name.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        LegCount.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-
-        LegIndex.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        LegSize.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        LegWashed.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        LegBarefoot.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-
-        LocationName.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        Came.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        Wait.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-
         Delete.setCellFactory(column->{return new TableCell<Person, Button>()
         {
             @Override
@@ -145,15 +109,18 @@ public class Controller {
                     item.setPrefHeight(table.getFixedCellSize());
                     //item.setPrefWidth(getWidth());
                     item.setOnAction(event -> {
-                        People.GetPersons().remove(table.getItems().get(getIndex()).GetName());
-                        table.getItems().remove(getIndex());
+                        People.GetPersons().remove(model.GetVisualPersonData().get(getIndex()).GetName());
+                        model.GetVisualPersonData().remove(getIndex());
                     });
                     setGraphic(item);
                 }
             }
         };
         });
+    }
 
+    private void CreateRowButtonActions()
+    {
         Actions.setCellFactory(column-> new TableCell<Person, MenuButton>()
         {
             @Override
@@ -172,8 +139,51 @@ public class Controller {
                 }
             }
         });
-            Name.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetName()));
-            LegCount.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegCount()));
+    }
+
+    private void InitialCommand()
+    {
+        Commands commands = new Commands();
+
+        commands.SetCommand("add_if_min", new AddIfMin());
+        commands.SetCommand("remove_lower", new RemoveLower());
+        commands.SetCommand("remove_all", new RemoveAll());
+        commands.SetCommand("show_all", new ShowAll());
+        commands.SetCommand("save", new Save());
+        commands.SetCommand("load", new Load());
+        commands.SetCommand("exit", new Exit());
+
+        ObservableList<Command> info = FXCollections.observableArrayList();
+        for (Command i : commands.GetCommands().values()) {
+            info.add(i);
+        }
+
+        BoxCommands.setItems(info);
+    }
+
+    private void SetTableFactory()
+    {
+        Name.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+        LegCount.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+
+        LegIndex.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+        LegSize.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+        LegWashed.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+        LegBarefoot.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+
+        LocationName.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+        Came.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+        Wait.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+
+        CreateRowButtonDelete();
+
+        CreateRowButtonActions();
+    }
+
+    private void SetTableValueFactory()
+    {
+        Name.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetName()));
+        LegCount.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegCount()));
 
         LegIndex.setCellValueFactory(cellData -> new SimpleStringProperty(LegIndex.getUserData()==null? "0": LegIndex.getUserData().toString()));
 
@@ -184,18 +194,20 @@ public class Controller {
         LocationName.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetPlace().GetPosition()));
         Came.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().IsCame()));
         Wait.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().IsWait()));
+    }
 
-
-        LocationName.setOnEditCommit(event -> VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).GetPlace().SetPosition(event.getNewValue()));
+    private void SetHadlersAndListeners()
+    {
+        LocationName.setOnEditCommit(event -> model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).GetPlace().SetPosition(event.getNewValue()));
 
         LegBarefoot.setOnEditCommit(event ->
-                VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetBarefoot(Boolean.parseBoolean(event.getNewValue())));
+                model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetBarefoot(Boolean.parseBoolean(event.getNewValue())));
 
         LegWashed.setOnEditCommit(event ->
-                VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetWashed(Boolean.parseBoolean(event.getNewValue())));
+                model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetWashed(Boolean.parseBoolean(event.getNewValue())));
 
         LegSize.setOnEditCommit(event ->
-                VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetSize(Leg.Size.valueOf(event.getNewValue())));
+                model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetSize(Leg.Size.valueOf(event.getNewValue())));
 
         LegIndex.setOnEditCommit(event -> {
             if(Integer.valueOf(event.getNewValue()) < table.getSelectionModel().getSelectedItem().GetLegCount() && Integer.valueOf(event.getNewValue()) >= 0)
@@ -203,47 +215,50 @@ public class Controller {
                 LegIndex.setUserData(Integer.valueOf(event.getNewValue()));
                 table.getItems().set(Integer.valueOf(table.getSelectionModel().getSelectedIndex()), table.getSelectionModel().getSelectedItem());
             }
-            else
-            {
-                InitAlert("Неверное значение индекса ноги!");
-            }
+            else InitAlert("Неверное значение индекса ноги!");
         });
 
         Came.setOnEditCommit(event -> {
             if(Boolean.parseBoolean(event.getNewValue()))
-            {
-                VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).Come(table.getSelectionModel().getSelectedItem().GetPlace());
-            }
+                model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).Come(table.getSelectionModel().getSelectedItem().GetPlace());
         });
 
-        Wait.setOnEditCommit(event -> VisualPersonData.get(table.getSelectionModel().getSelectedIndex()).SetWait(Boolean.parseBoolean(event.getNewValue())));
+        Wait.setOnEditCommit(event -> model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).SetWait(Boolean.parseBoolean(event.getNewValue())));
 
-        Save.setOnAction(event -> Execute(new Save()));
+        Save.setOnAction(event -> Execute(new Save(), null));
 
-        Load.setOnAction(event -> Execute(new Load()));
+        Load.setOnAction(event -> Execute(new Load(), null));
 
         Text.setStyle("-fx-text-fill: black;");
 
         ColorChoose.valueProperty().addListener((observable, oldColor, newColor) ->
-                Text.setStyle(
-                        "-fx-text-fill: " + toRgbString(newColor) + ";"
-                ));
+                Text.setStyle("-fx-text-fill: " + toRgbString(newColor) + ";"));
 
-
-        Slider.valueProperty().addListener((ov, old_val, new_val) -> {
-            table.scrollTo((int) ((double)new_val/ (Slider.getMax()/table.getItems().size())));
-        });
+        Slider.valueProperty().addListener((ov, old_val, new_val) ->
+                table.scrollTo((int) ((double)new_val/ (Slider.getMax()/table.getItems().size()))));
 
         FilterButton.setOnAction(event -> {
-            if(controller!=null)
-            {
-                Filter(controller.GetInfo());
-            }
-            else
-            {
-                Filter(null);
-            }
+            if(controller!=null) model.Filter(controller.GetInfo());
+            else model.Filter(null);
         });
+    }
+
+    @FXML
+    private void initialize()
+    {
+        model = new Model();
+
+        table.setFixedCellSize(45.0);
+
+        table.setItems(model.GetVisualPersonData());
+
+        InitialCommand();
+
+        SetTableFactory();
+
+        SetTableValueFactory();
+
+        SetHadlersAndListeners();
     }
 
     private String toRgbString(Color c) {
@@ -268,32 +283,6 @@ public class Controller {
         {
             Slider.setVisible(false);
         }
-    }
-
-    public void ChangeLeg()
-    {
-        /*
-        Person temp = table.getSelectionModel().getSelectedItem();
-
-        String temp2 =  LegIndex.getCellData(table.getSelectionModel().getSelectedItem());
-
-
-
-        if(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()) == String.valueOf(table.getSelectionModel().getSelectedItem().GetLegCount()))
-        {
-            table.getItems().set(Integer.valueOf(table.getSelectionModel().getSelectedIndex()), table.getSelectionModel().getSelectedItem());
-            /*
-            LegSize.getCellData(table.getSelectionModel().getSelectedItem())
-
-            Integer.valueOf(LegIndex.getCellData(cellData.getValue()))
-
-            LegSize.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegs()[0].GetSize()));
-            LegWashed.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegs()[0].IsWashed()));
-            LegBarefoot.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegs()[0].IsBarefoot()));
-        }
-        else
-        {
-        }*/
     }
 
     public void CreateFilter()
@@ -321,65 +310,9 @@ public class Controller {
         }
     }
 
-    public void Filter(FilterStruct filter)
-    {
-        table.getItems().clear();
-
-        People.GetPersons().forEach((str, pers)->{
-            if(!filter.GetName().equals("") && filter.GetName()!=null && !pers.GetName().equals(filter.GetName())) return;
-
-            if(!filter.GetLocationName().equals("") && filter.GetLocationName()!=null && !pers.GetPlace().GetPosition().equals(filter.GetLocationName())) return;
-
-            if(pers.GetLegs().length<filter.GetMinCountLeg() || pers.GetLegs().length>filter.GetMaxCountLeg()) return;
-
-            boolean LegSizeAllFlag = false;
-            boolean LegWashedAllFlag = false;
-            boolean LegBarefootAllFlag = false;
-
-            for(Leg i: pers.GetLegs())
-            {
-                if (filter.IsLegSizeAll())
-                {
-                    if(!filter.GetLegSize().matcher(i.GetSize().toString()).matches()) return;
-                }
-                else
-                {
-                    if(filter.GetLegSize().matcher(i.GetSize().toString()).matches()) LegSizeAllFlag = true;
-                }
-
-                if(filter.IsLegBarefootAll())
-                {
-                    if(!filter.GetLegBarefoot().matcher(String.valueOf(i.IsBarefoot())).matches()) return;
-                }
-                else
-                {
-                    if(filter.GetLegBarefoot().matcher(String.valueOf(i.IsBarefoot())).matches()) LegBarefootAllFlag = true;
-                }
-
-                if(filter.IsLegWashedAll())
-                {
-                    if(!filter.GetLegWashed().matcher(String.valueOf(i.IsWashed())).matches()) return;
-                }
-                else
-                {
-                    if(filter.GetLegWashed().matcher(String.valueOf(i.IsWashed())).matches()) LegWashedAllFlag = true;
-                }
-            }
-
-            if(!filter.GetCame().matcher(String.valueOf(pers.IsCame())).matches()) return;
-            if(!filter.GetWait().matcher(String.valueOf(pers.IsWait())).matches()) return;
-
-
-            if((filter.IsLegSizeAll() || LegSizeAllFlag) &&
-                    (filter.IsLegWashedAll() || LegWashedAllFlag) &&
-                    (filter.IsLegBarefootAll() || LegBarefootAllFlag))
-            table.getItems().add(pers);
-        });
-    }
-
     public void Execute()
     {
-        Execute(BoxCommands.getValue());
+        Execute(BoxCommands.getValue(),Text.getText());
     }
 
     private void InitAlert(String message)
@@ -392,7 +325,7 @@ public class Controller {
         alert.showAndWait();
     }
 
-    public void Execute(Command command)
+    public void Execute(Command command, String parametrs)
     {
         Thread thread = new Thread(){
             public void run()
@@ -401,16 +334,13 @@ public class Controller {
                 {
                     sleep(1000);
 
-                    if(command.execute(command.read(Text.getText())))
+                    if(command.execute(command.read(parametrs)))
                     {
                         System.exit(0);
                     }
 
-                    ObservableList<Person>  temp = FXCollections.observableList(new LinkedList<Person>(People.GetPersons().values()));
-                    if(!table.getItems().equals(temp))
+                    if(model.Update())
                     {
-                        VisualPersonData.clear();
-                        VisualPersonData.addAll(temp);
                         Zoom();
                     }
 
@@ -434,10 +364,6 @@ public class Controller {
 
         thread.start();
     }
-
-    ObservableList<Person> VisualPersonData = FXCollections.observableList(new LinkedList<Person>(People.GetPersons().values()));
-
-    ObservableList<Person> GetVisualPersonData(){return VisualPersonData;}
 
     public void setMain(Laba0 main, Stage mainStage)
     {
@@ -463,11 +389,9 @@ public class Controller {
             {
                 temp = (Person) Class.forName(strings[0]).newInstance();
             }
-            People.AddPerson(temp);
 
-            if(VisualPersonData.size()!=People.GetPersons().size())
+            if(model.Add(temp))
             {
-                VisualPersonData.add(temp);
                 Zoom();
             }
         }
