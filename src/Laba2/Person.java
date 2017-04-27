@@ -204,7 +204,7 @@ public abstract class Person  implements Waitable,Subscribable,Comparable
         //Pattern p = Pattern.compile("[a-z,A-Z,А-Я,а-я]+,' ',[a-z,A-Z,А-Я,а-я]+");
         Pattern p = Pattern.compile("[a-z,A-Z,А-Я,а-я]+\\s?[a-z,A-Z,А-Я,а-я]+");
         Matcher m = p.matcher(Name);
-        if (!m.matches())
+        if (false)
         {
             throw new ExceptionWrongName();
         }

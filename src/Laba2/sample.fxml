@@ -26,7 +26,7 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 
-<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1038.0" style="-fx-background-color: #5d5d5d;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Visual.Controller">
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#GenerateRandom" prefHeight="607.0" prefWidth="1038.0" style="-fx-background-color: #5d5d5d;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Visual.Controller">
   <children>
     <MenuBar maxHeight="22.0" minHeight="22.0" prefHeight="22.0" prefWidth="968.0" style="-fx-background-color: #5d5d5d;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <menus>

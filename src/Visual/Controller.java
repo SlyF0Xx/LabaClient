@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Random;
 
 public class Controller {
     @FXML
@@ -185,11 +186,17 @@ public class Controller {
         Name.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetName()));
         LegCount.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegCount()));
 
-        LegIndex.setCellValueFactory(cellData -> new SimpleStringProperty(LegIndex.getUserData()==null? "0": LegIndex.getUserData().toString()));
+        //TODO!!!!
+        LegIndex.setCellValueFactory(cellData -> new SimpleStringProperty(LegIndex.getUserData() == null ? "0" : String.valueOf(LegIndex.getUserData())));
 
-        LegSize.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegs()[((Integer) LegIndex.getUserData())==null? 0: (Integer) LegIndex.getUserData()].GetSize()));
-        LegWashed.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegs()[((Integer) LegIndex.getUserData())==null? 0: (Integer) LegIndex.getUserData()].IsWashed()));
-        LegBarefoot.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegs()[((Integer) LegIndex.getUserData())==null? 0: (Integer) LegIndex.getUserData()].IsBarefoot()));
+        LegSize.setCellValueFactory(cellData->
+           GetVisualParametr(cellData.getValue().GetLegs()[Integer.valueOf(LegIndex.getCellData(cellData.getValue()))].GetSize()));
+
+        LegWashed.setCellValueFactory(cellData->
+                GetVisualParametr(cellData.getValue().GetLegs()[Integer.valueOf(LegIndex.getCellData(cellData.getValue()))].IsWashed()));
+
+        LegBarefoot.setCellValueFactory(cellData->
+                GetVisualParametr(cellData.getValue().GetLegs()[Integer.valueOf(LegIndex.getCellData(cellData.getValue()))].IsBarefoot()));
 
         LocationName.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetPlace().GetPosition()));
         Came.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().IsCame()));
@@ -371,9 +378,56 @@ public class Controller {
         this.main = main;
     }
 
-    public void NewElement() throws ClassNotFoundException, IllegalAccessException, InstantiationException
+    public void GenerateRandom()
     {
-        String[] strings = Text.getText().split(" ");
+        String Legs = new String();
+
+        String RandomLegSiz = Leg.Size.class.getEnumConstants()[(int)(Math.random()*2)].toString();
+        Legs += "{\"Washed\":" + String.valueOf(Math.random() >0.5? true : false) +
+                ",\"Barefoot\":"+ String.valueOf(Math.random() >0.5? true : false) +
+                ",\"LegSize\":\"" + RandomLegSiz+ "\"}";
+
+        for(int i = 0; i<Math.random()*10;i++)
+        {
+            String RandomSize = Leg.Size.class.getEnumConstants()[(int)(Math.random()*2)].toString();
+            Legs += ",{\"Washed\":" + String.valueOf(Math.random() >0.5? true : false) +
+                    ",\"Barefoot\":"+ String.valueOf(Math.random() >0.5? true : false) +
+                    ",\"LegSize\":\"" + RandomSize+ "\"}";
+        }
+
+        try {
+            NewElement("Laba2.FrekenBok "+"{\"Legs\":[" +
+                Legs +
+                "],\"Place\":{\"Position\":\"" + String.valueOf(Math.random()) +
+                    "\"},\"Name\":\"" + String.valueOf(Math.random()) +
+                    "\",\"Came\":" + String.valueOf(Math.random() >0.5? true : false) +
+                    ",\"wait\":" + String.valueOf(Math.random() >0.5? true : false) +
+                    "}");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void NewElement()
+    {
+        try {
+            NewElement(Text.getText());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void NewElement(String message) throws ClassNotFoundException, IllegalAccessException, InstantiationException
+    {
+        String[] strings = message.split(" ");
         Person temp;
 
         if(!strings[0].equals(""))
@@ -383,7 +437,7 @@ public class Controller {
 
             try
             {
-                temp = (Person) mapper.readValue(Text.getText().split(strings[0],2)[1], Class.forName(strings[0]));
+                temp = (Person) mapper.readValue(message.split(strings[0],2)[1], Class.forName(strings[0]));
             }
             catch (Exception e)
             {
