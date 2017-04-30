@@ -6,10 +6,15 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,40 +30,40 @@ import java.util.Random;
 
 public class Controller {
     @FXML
-    private TableView<Person> table;
+    private TableView<VisualPerson> table;
 
     @FXML
-    private TableColumn<Person, String> Name;
+    private TableColumn<VisualPerson, String> Name;
 
     @FXML
-    private TableColumn<Person, String> LegCount;
+    private TableColumn<VisualPerson, String> LegCount;
 
     @FXML
-    private TableColumn<Person, String> LegIndex;
+    private TableColumn<VisualPerson, Spinner<Integer>> LegIndex;
 
     @FXML
-    private TableColumn<Person, String> LegSize;
+    private TableColumn<VisualPerson, String> LegSize;
 
     @FXML
-    private TableColumn<Person, String> LegWashed;
+    private TableColumn<VisualPerson, String> LegWashed;
 
     @FXML
-    private TableColumn<Person, String> LegBarefoot;
+    private TableColumn<VisualPerson, String> LegBarefoot;
 
     @FXML
-    private TableColumn<Person, String> LocationName;
+    private TableColumn<VisualPerson, String> LocationName;
 
     @FXML
-    private TableColumn<Person, String> Came;
+    private TableColumn<VisualPerson, String> Came;
 
     @FXML
-    private TableColumn<Person, String> Wait;
+    private TableColumn<VisualPerson, String> Wait;
 
     @FXML
-    private TableColumn<Person, Button> Delete;
+    private TableColumn<VisualPerson, Button> Delete;
 
     @FXML
-    private TableColumn<Person, MenuButton> Actions;
+    private TableColumn<VisualPerson, MenuButton> Actions;
 
     @FXML
     private ComboBox<Command> BoxCommands;
@@ -94,7 +99,7 @@ public class Controller {
 
     private void CreateRowButtonDelete()
     {
-        Delete.setCellFactory(column->{return new TableCell<Person, Button>()
+        Delete.setCellFactory(column->{return new TableCell<VisualPerson, Button>()
         {
             @Override
             protected void updateItem(Button item, boolean empty)
@@ -110,7 +115,7 @@ public class Controller {
                     item.setPrefHeight(table.getFixedCellSize());
                     //item.setPrefWidth(getWidth());
                     item.setOnAction(event -> {
-                        People.GetPersons().remove(model.GetVisualPersonData().get(getIndex()).GetName());
+                        People.GetPersons().remove(model.GetVisualPersonData().get(getIndex()).getPerson().GetName());
                         model.GetVisualPersonData().remove(getIndex());
                     });
                     setGraphic(item);
@@ -122,7 +127,7 @@ public class Controller {
 
     private void CreateRowButtonActions()
     {
-        Actions.setCellFactory(column-> new TableCell<Person, MenuButton>()
+        Actions.setCellFactory(column-> new TableCell<VisualPerson, MenuButton>()
         {
             @Override
             protected void updateItem(MenuButton item, boolean empty)
@@ -164,17 +169,44 @@ public class Controller {
 
     private void SetTableFactory()
     {
-        Name.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        LegCount.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+        Name.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
+        LegCount.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
 
-        LegIndex.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        LegSize.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        LegWashed.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        LegBarefoot.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+        //LegIndex.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
+        LegSize.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
+        LegWashed.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
+        LegBarefoot.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
 
-        LocationName.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        Came.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
-        Wait.setCellFactory(TextFieldTableCell.<Person>forTableColumn());
+        LocationName.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
+        Came.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
+        Wait.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
+
+        LegIndex.setCellFactory(column-> { return new TableCell<VisualPerson, Spinner<Integer>>() {
+            @Override
+            protected void updateItem(Spinner<Integer> item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    item = new Spinner<Integer>(0, Integer.valueOf(LegCount.getCellData(getIndex()))-1, model.GetVisualPersonData().get(getIndex()).getLegIndex());
+                    item.setPrefHeight(table.getFixedCellSize());
+                    item.setEditable(true);
+
+                    item.valueProperty().addListener(
+                            ((observable, oldValue, newValue) ->
+                            {
+                                model.GetVisualPersonData().get(getIndex()).setLegIndex(newValue);
+
+                                table.refresh();
+                            })
+                    );
+
+                    setGraphic(item);
+                }
+            }
+        };
+        });
+
 
         CreateRowButtonDelete();
 
@@ -183,54 +215,49 @@ public class Controller {
 
     private void SetTableValueFactory()
     {
-        Name.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetName()));
-        LegCount.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetLegCount()));
+        Name.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetName()));
+        LegCount.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetLegCount()));
 
-        //TODO!!!!
-        LegIndex.setCellValueFactory(cellData -> new SimpleStringProperty(LegIndex.getUserData() == null ? "0" : String.valueOf(LegIndex.getUserData())));
+        LegIndex.setCellValueFactory(cellData-> new SimpleObjectProperty<Spinner<Integer>>(new Spinner<Integer>(0, Integer.valueOf(LegCount.getCellData(cellData.getValue()))-1, cellData.getValue().getLegIndex())));
 
         LegSize.setCellValueFactory(cellData->
-           GetVisualParametr(cellData.getValue().GetLegs()[Integer.valueOf(LegIndex.getCellData(cellData.getValue()))].GetSize()));
+                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].GetSize())
+        );
 
         LegWashed.setCellValueFactory(cellData->
-                GetVisualParametr(cellData.getValue().GetLegs()[Integer.valueOf(LegIndex.getCellData(cellData.getValue()))].IsWashed()));
+                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].IsWashed()));
 
         LegBarefoot.setCellValueFactory(cellData->
-                GetVisualParametr(cellData.getValue().GetLegs()[Integer.valueOf(LegIndex.getCellData(cellData.getValue()))].IsBarefoot()));
+                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].IsBarefoot()));
 
-        LocationName.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().GetPlace().GetPosition()));
-        Came.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().IsCame()));
-        Wait.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().IsWait()));
+        LocationName.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetPlace().GetPosition()));
+        Came.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsCame()));
+        Wait.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsWait()));
     }
 
     private void SetHadlersAndListeners()
     {
-        LocationName.setOnEditCommit(event -> model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).GetPlace().SetPosition(event.getNewValue()));
+        LocationName.setOnEditCommit(event -> event.getRowValue().getPerson().GetPlace().SetPosition(event.getNewValue()));
 
         LegBarefoot.setOnEditCommit(event ->
-                model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetBarefoot(Boolean.parseBoolean(event.getNewValue())));
+                event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
+                        .SetBarefoot(Boolean.parseBoolean(event.getNewValue())));
 
         LegWashed.setOnEditCommit(event ->
-                model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetWashed(Boolean.parseBoolean(event.getNewValue())));
+                event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
+                        .SetWashed(Boolean.parseBoolean(event.getNewValue())));
 
         LegSize.setOnEditCommit(event ->
-                model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).GetLegs()[Integer.valueOf(LegIndex.getCellData(table.getSelectionModel().getSelectedItem()))].SetSize(Leg.Size.valueOf(event.getNewValue())));
+                event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
+                        .SetSize(Leg.Size.valueOf(event.getNewValue())));
 
-        LegIndex.setOnEditCommit(event -> {
-            if(Integer.valueOf(event.getNewValue()) < table.getSelectionModel().getSelectedItem().GetLegCount() && Integer.valueOf(event.getNewValue()) >= 0)
-            {
-                LegIndex.setUserData(Integer.valueOf(event.getNewValue()));
-                table.getItems().set(Integer.valueOf(table.getSelectionModel().getSelectedIndex()), table.getSelectionModel().getSelectedItem());
-            }
-            else InitAlert("Неверное значение индекса ноги!");
-        });
 
         Came.setOnEditCommit(event -> {
             if(Boolean.parseBoolean(event.getNewValue()))
-                model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).Come(table.getSelectionModel().getSelectedItem().GetPlace());
+                model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).getPerson().Come(table.getSelectionModel().getSelectedItem().getPerson().GetPlace());
         });
 
-        Wait.setOnEditCommit(event -> model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).SetWait(Boolean.parseBoolean(event.getNewValue())));
+        Wait.setOnEditCommit(event -> event.getRowValue().getPerson().SetWait(Boolean.parseBoolean(event.getNewValue())));
 
         Save.setOnAction(event -> Execute(new Save(), null));
 
@@ -444,7 +471,7 @@ public class Controller {
                 temp = (Person) Class.forName(strings[0]).newInstance();
             }
 
-            if(model.Add(temp))
+            if(model.Add(new VisualPerson(temp)))
             {
                 Zoom();
             }

@@ -11,9 +11,9 @@ import java.util.LinkedList;
  * Created by SlyFox on 26.04.2017.
  */
 public class Model {
-    ObservableList<Person> VisualPersonData;
+    ObservableList<VisualPerson> VisualPersonData;
 
-    ObservableList<Person> GetVisualPersonData(){return VisualPersonData;}
+    ObservableList<VisualPerson> GetVisualPersonData(){return VisualPersonData;}
 
     public void Filter(FilterStruct filter)
     {
@@ -67,13 +67,13 @@ public class Model {
             if((filter.IsLegSizeAll() || LegSizeAllFlag) &&
                     (filter.IsLegWashedAll() || LegWashedAllFlag) &&
                     (filter.IsLegBarefootAll() || LegBarefootAllFlag))
-                VisualPersonData.add(pers);
+                VisualPersonData.add(new VisualPerson(pers,0));
         });
     }
 
-    boolean Add(Person temp)
+    boolean Add(VisualPerson temp)
     {
-        Updater.Add(temp);
+        Updater.Add(temp.getPerson());
 
         if(VisualPersonData.size()!=Updater.GetAll().size()) {
             VisualPersonData.add(temp);
@@ -82,7 +82,7 @@ public class Model {
         return false;
     }
 
-    boolean Add(ObservableList<Person>  temp)
+    boolean Add(ObservableList<VisualPerson>  temp)
     {
         if(!VisualPersonData.equals(temp))
         {
@@ -95,13 +95,23 @@ public class Model {
 
     boolean Update()
     {
-        ObservableList<Person>  temp = FXCollections.observableList(new LinkedList<Person>(Updater.GetAll().values()));
+        LinkedList<Person> temp = new LinkedList<Person>(Updater.GetAll().values());
+        LinkedList<VisualPerson>  temp2 = new LinkedList<VisualPerson>();
+        for (Person i: temp) {
+            temp2.add(new VisualPerson(i, 0));
+        }
+        //ObservableList<Person>  temp = FXCollections.observableList(new LinkedList<VisualPerson>(Updater.GetAll().values()));
 
-        return Add(temp);
+        return Add(FXCollections.observableList(temp2));
     }
 
     Model()
     {
-        VisualPersonData = FXCollections.observableList(new LinkedList<Person>(Updater.GetAll().values()));
+        LinkedList<Person> temp = new LinkedList<Person>(Updater.GetAll().values());
+        LinkedList<VisualPerson>  temp2 = new LinkedList<VisualPerson>();
+        for (Person i: temp) {
+            temp2.add(new VisualPerson(i, 0));
+        }
+        VisualPersonData = FXCollections.observableList(temp2);
     }
 }

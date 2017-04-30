@@ -38,16 +38,16 @@ public class MyMenu {
         CameTextField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                owner.model.GetVisualPersonData().get(current).Come(new Location(CameTextField.getText()));
-                owner.model.GetVisualPersonData().set(current, Updater.GetPerson(owner.model.GetVisualPersonData().get(current).GetName()));
+                owner.model.GetVisualPersonData().get(current).getPerson().Come(new Location(CameTextField.getText()));
+                owner.model.GetVisualPersonData().set(current, owner.model.GetVisualPersonData().get(current));
             }
         });
 
         WaitTextField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                owner.model.GetVisualPersonData().get(current).Waiting(Updater.GetPerson(WaitTextField.getText()));
-                owner.model.GetVisualPersonData().set(current, Updater.GetPerson(owner.model.GetVisualPersonData().get(current).GetName()));
+                owner.model.GetVisualPersonData().get(current).getPerson().Waiting(Updater.GetPerson(WaitTextField.getText()));
+                owner.model.GetVisualPersonData().set(current, owner.model.GetVisualPersonData().get(current));
             }
         });
 
