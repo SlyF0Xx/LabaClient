@@ -23,4 +23,25 @@ public class Updater {
     {
         return People.GetByName(name);
     }
+
+    static void EditPerson(String name, Person newValue)
+    {
+        People.GetPersons().
+    }
+
+    static void EditPersons(Map<String, Person> persons)
+    {
+        People.GetPersons().clear();
+        People.GetPersons().putAll(persons);
+    }
+
+    static void AddPerson(Person Value)
+    {
+        People.AddPerson(Value);
+    }
+
+    static void DeletePerson(String name)
+    {
+       People.GetPersons().remove(name);
+    }
 }
