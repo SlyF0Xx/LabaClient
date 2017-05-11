@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Laba7Client:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Laba7Client_jar</output-path>
+    <root id="archive" name="Laba7Client.jar">
+      <element id="module-output" name="Laba7Client" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.8.0/jackson-annotations-2.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.8.1/jackson-core-2.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/dataformat/jackson-dataformat-csv/2.4.1/jackson-dataformat-csv-2.4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-csv/1.1/commons-csv-1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.8.5/jackson-databind-2.8.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/Program Files/Java/jre1.8.0_131/lib/ext/jfxrt.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

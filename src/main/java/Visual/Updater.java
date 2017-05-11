@@ -1,6 +1,5 @@
 package Visual;
 
-import Laba2.People;
 import Laba2.Person;
 import Laba2.RequestsResponcesTable;
 
@@ -8,7 +7,9 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by SlyFox on 26.04.2017.
@@ -17,6 +18,14 @@ public class Updater{
     private static InetSocketAddress  Addr;
     private static  DatagramChannel clientChannel;
 
+    public static void Disconect()
+    {
+        try {
+            clientChannel.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void SetInetAddress(InetSocketAddress inetAddress)
     {
@@ -39,6 +48,7 @@ public class Updater{
             Addr = new InetSocketAddress("localhost", 2222);
 
             clientChannel.connect(Addr);
+            //clientChannel.bind(Addr);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,6 +125,19 @@ public class Updater{
         return null;
     }
 
+    public static Boolean ReciveBoolean()
+    {
+        ByteBuffer buffer = ByteBuffer.allocate(1);
+
+        try {
+            clientChannel.receive(buffer);
+            return buffer.get(0)==1;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void SendCommand(String name)
     {
         ByteBuffer buffer;
@@ -140,7 +163,6 @@ public class Updater{
             return (Person) ReciveObject();
         }
         else return null;
-        //return People.GetByName(name);
     }
 
     static Map<String, Person> GetAll()
@@ -151,18 +173,17 @@ public class Updater{
             return (Map<String, Person>) ReciveObject();
         }
         else return null;
-        //return People.GetPersons();
     }
 
     static void EditPerson(String name, Person newValue)
     {
-        //People.GetPersons().
+        SendCommand("EditPerson");
+        SendObject(name);
+        SendObject(newValue);
     }
 
     static void EditPersons(Map<String, Person> persons)
     {
-        People.GetPersons().clear();
-        People.GetPersons().putAll(persons);
     }
 
     static void AddPerson(Person Value)
@@ -172,8 +193,6 @@ public class Updater{
             SendCommand("AddPerson");
             SendObject(Value);
         }
-
-        //People.AddPerson(Value);
     }
 
     static void AddPersons(Map<String, Person> persons)
@@ -183,12 +202,7 @@ public class Updater{
             SendCommand("AddPersons");
             SendObject(persons.size());
             persons.forEach((i,j)->SendObject(j));
-
-
-            //SendObject(Value);
         }
-
-        //People.AddPerson(Value);
     }
 
     static void DeletePerson(String name)
@@ -198,6 +212,26 @@ public class Updater{
             SendCommand("DeletePerson");
             SendObject(name);
         }
-        //People.GetPersons().remove(name);
+    }
+
+    static Set<String> GetCommandNames()
+    {
+        SendCommand("GetCommandNames");
+        Object[] target = (Object[]) ReciveObject();
+        Set<String> names = new LinkedHashSet<String>();
+
+        for(Object i : target)
+        {
+            names.add((String)i);
+        }
+        return names;
+    }
+
+    static boolean ExecuteCommand(String name, String params)
+    {
+        SendCommand("ExecuteCommand");
+        SendObject(name);
+        SendObject(params);
+        return ReciveBoolean();
     }
 }

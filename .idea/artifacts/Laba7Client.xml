@@ -1,0 +1,26 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Laba7Client">
+    <output-path>$PROJECT_DIR$/out/artifacts/Laba7Client</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="Laba2.Laba0" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="Laba7Client.jar">
+        <element id="module-output" name="Laba7Client" />
+        <element id="file-copy" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.8.5/jackson-databind-2.8.5.jar" />
+        <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
+        <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.1" />
+        <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.5" />
+        <element id="library" level="project" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.4.1" />
+        <element id="file-copy" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-csv/1.1/commons-csv-1.1.jar" />
+      </element>
+    </root>
+  </artifact>
+</component>

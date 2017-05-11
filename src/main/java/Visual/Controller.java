@@ -1,6 +1,8 @@
 package Visual;
 
-import Cmd.*;
+import Cmd.Command;
+import Cmd.Commands;
+import Cmd.Exit;
 import Laba2.Laba0;
 import Laba2.Leg;
 import Laba2.Person;
@@ -24,6 +26,7 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Set;
 
 public class Controller {
     @FXML
@@ -143,17 +146,42 @@ public class Controller {
         });
     }
 
+
+    Commands commands;
     private void InitialCommand()
     {
-        Commands commands = new Commands();
+        commands = new Commands();
 
-        commands.SetCommand("add_if_min", new AddIfMin());
-        commands.SetCommand("remove_lower", new RemoveLower());
-        commands.SetCommand("remove_all", new RemoveAll());
-        commands.SetCommand("show_all", new ShowAll());
-        commands.SetCommand("save", new Save());
-        commands.SetCommand("load", new Load());
+        //commands.SetCommand("add_if_min", new AddIfMin());
+        //commands.SetCommand("remove_lower", new RemoveLower());
+        //commands.SetCommand("remove_all", new RemoveAll());
+        //commands.SetCommand("show_all", new ShowAll());
+        //commands.SetCommand("save", new Save());
+        //commands.SetCommand("load", new Load());
         commands.SetCommand("exit", new Exit());
+
+        Set<String> coms = Updater.GetCommandNames();
+        for (String i: coms)
+        {
+            commands.SetCommand(i, new Command() {
+                @Override
+                public String toString() {
+                    return i;
+                }
+
+                @Override
+                public Object[] read(String string) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException
+                {
+                    return new Object[] {string};
+                }
+
+                @Override
+                public boolean execute(Object... objects) throws Exception {
+                    return Updater.ExecuteCommand(i, (String) objects[0]);
+                }
+            });
+        }
+
 
         ObservableList<Command> info = FXCollections.observableArrayList();
         for (Command i : commands.GetCommands().values()) {
@@ -233,31 +261,56 @@ public class Controller {
 
     private void SetHadlersAndListeners()
     {
-        LocationName.setOnEditCommit(event -> event.getRowValue().getPerson().GetPlace().SetPosition(event.getNewValue()));
+        LocationName.setOnEditCommit(event ->
+        {
+            event.getRowValue().getPerson().GetPlace().SetPosition(event.getNewValue());
+            Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
+        });
 
         LegBarefoot.setOnEditCommit(event ->
-                event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
-                        .SetBarefoot(Boolean.parseBoolean(event.getNewValue())));
+        {
+            event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
+                    .SetBarefoot(Boolean.parseBoolean(event.getNewValue()));
+            Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
+        });
+
 
         LegWashed.setOnEditCommit(event ->
-                event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
-                        .SetWashed(Boolean.parseBoolean(event.getNewValue())));
+         {
+             event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
+                            .SetWashed(Boolean.parseBoolean(event.getNewValue()));
+             Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
+         });
 
         LegSize.setOnEditCommit(event ->
-                event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
-                        .SetSize(Leg.Size.valueOf(event.getNewValue())));
+        {
+            event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
+                        .SetSize(Leg.Size.valueOf(event.getNewValue()));
+            Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
+        });
 
 
         Came.setOnEditCommit(event -> {
             if(Boolean.parseBoolean(event.getNewValue()))
+            {
                 model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).getPerson().Come(table.getSelectionModel().getSelectedItem().getPerson().GetPlace());
+                Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
+            }
         });
 
-        Wait.setOnEditCommit(event -> event.getRowValue().getPerson().SetWait(Boolean.parseBoolean(event.getNewValue())));
+        Wait.setOnEditCommit(event ->
+        {
+                event.getRowValue().getPerson().SetWait(Boolean.parseBoolean(event.getNewValue()));
+                Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
+        });
 
-        Save.setOnAction(event -> Execute(new Save(), null));
+        Save.setOnAction(event -> Execute(
+                commands.GetCommands().get("save")
+                , null));
 
-        Load.setOnAction(event -> Execute(new Load(), null));
+        Load.setOnAction(event -> Execute(
+                commands.GetCommands().get("load")
+                , null));
 
         Text.setStyle("-fx-text-fill: black;");
 
