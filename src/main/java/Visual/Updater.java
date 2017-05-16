@@ -45,6 +45,7 @@ public class Updater{
         try {
             clientChannel = DatagramChannel.open();
 
+            //Addr = new InetSocketAddress("88.201.205.92", 2222);
             Addr = new InetSocketAddress("localhost", 2222);
 
             clientChannel.connect(Addr);

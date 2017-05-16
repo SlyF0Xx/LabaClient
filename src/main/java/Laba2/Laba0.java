@@ -43,8 +43,8 @@ public class Laba0
         try
         {
             FXMLLoader loader = new FXMLLoader();
-            //loader.setLocation(Laba0.class.getResource("/sample.fxml"));
-            loader.setLocation(Laba0.class.getResource("../sample.fxml"));
+            loader.setLocation(Laba0.class.getResource("/sample.fxml"));
+            //loader.setLocation(Laba0.class.getResource("../sample.fxml"));
 
             Parent root = loader.load();
             primaryStage.setTitle("Laba");
