@@ -6,6 +6,7 @@ import Cmd.Exit;
 import Laba2.Laba0;
 import Laba2.Leg;
 import Laba2.Person;
+import Laba2.Reciver;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -330,7 +331,6 @@ public class Controller {
     private void initialize()
     {
         Updater.SetInetAddress();
-
         /*
         Updater.SendObject(1);
         Updater.SendObject(15);
@@ -341,6 +341,8 @@ public class Controller {
         //Person pers =  Updater.GetPerson("Mal");
 
         model = new Model();
+
+        Reciver.setModel(model);
 
         table.setFixedCellSize(45.0);
 
@@ -409,7 +411,7 @@ public class Controller {
         Execute(BoxCommands.getValue(),Text.getText());
     }
 
-    private void InitAlert(String message)
+    public static void InitAlert(String message)
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Предупреждение!");

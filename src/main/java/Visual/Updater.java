@@ -1,6 +1,7 @@
 package Visual;
 
 import Laba2.Person;
+import Laba2.Reciver;
 import Laba2.RequestsResponcesTable;
 
 import java.io.*;
@@ -45,10 +46,12 @@ public class Updater{
         try {
             clientChannel = DatagramChannel.open();
 
-            //Addr = new InetSocketAddress("88.201.205.92", 2222);
+            //Addr = new InetSocketAddress("192.168.43.22", 2222);
             Addr = new InetSocketAddress("localhost", 2222);
 
             clientChannel.connect(Addr);
+
+            new Reciver(clientChannel).start();
             //clientChannel.bind(Addr);
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,6 +142,19 @@ public class Updater{
         return null;
     }
 
+    public static String ReciveResponce()
+    {
+        ByteBuffer buffer = ByteBuffer.allocate(1);
+
+        try {
+            clientChannel.receive(buffer);
+            return RequestsResponcesTable.getResponceByValue(buffer.get(0));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void SendCommand(String name)
     {
         ByteBuffer buffer;
@@ -161,7 +177,17 @@ public class Updater{
         {
             SendCommand("GetPerson");
             SendObject(name);
-            return (Person) ReciveObject();
+
+            while(true)
+            {
+                if(Reciver.IsPrepareForTrnsmiting())
+                {
+                    Person temp = (Person) ReciveObject();
+                    Reciver.endTransmiting();
+                    return temp;
+                }
+            }
+
         }
         else return null;
     }
@@ -171,7 +197,15 @@ public class Updater{
         if(Addr!=null)
         {
             SendCommand("GetPersons");
-            return (Map<String, Person>) ReciveObject();
+            while(true)
+            {
+                if(Reciver.IsPrepareForTrnsmiting())
+                {
+                    Map<String, Person> temp =  (Map<String, Person>) ReciveObject();
+                    Reciver.endTransmiting();
+                    return temp;
+                }
+            }
         }
         else return null;
     }
@@ -181,10 +215,6 @@ public class Updater{
         SendCommand("EditPerson");
         SendObject(name);
         SendObject(newValue);
-    }
-
-    static void EditPersons(Map<String, Person> persons)
-    {
     }
 
     static void AddPerson(Person Value)
@@ -218,7 +248,16 @@ public class Updater{
     static Set<String> GetCommandNames()
     {
         SendCommand("GetCommandNames");
-        Object[] target = (Object[]) ReciveObject();
+        Object[] target;
+        while(true)
+        {
+            if(Reciver.IsPrepareForTrnsmiting())
+            {
+                target = (Object[]) ReciveObject();
+                Reciver.endTransmiting();
+                break;
+            }
+        }
         Set<String> names = new LinkedHashSet<String>();
 
         for(Object i : target)
@@ -233,6 +272,14 @@ public class Updater{
         SendCommand("ExecuteCommand");
         SendObject(name);
         SendObject(params);
-        return ReciveBoolean();
+        while(true)
+        {
+            if(Reciver.IsPrepareForTrnsmiting())
+            {
+                Boolean temp =  ReciveBoolean();
+                Reciver.endTransmiting();
+                return temp;
+            }
+        }
     }
 }

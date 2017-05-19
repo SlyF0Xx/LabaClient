@@ -71,14 +71,14 @@ public class Model {
         });
     }
 
-    boolean Add(VisualPerson temp)
+    public boolean Add(VisualPerson temp)
     {
         Updater.AddPerson(temp.getPerson());
 
-        if(VisualPersonData.size()!=Updater.GetAll().size()) {
+        /*       if(VisualPersonData.size()!=Updater.GetAll().size()) {
             VisualPersonData.add(temp);
             return true;
-        }
+        }*/
         return false;
     }
 
@@ -93,7 +93,7 @@ public class Model {
         return false;
     }
 
-    boolean Update()
+    public boolean Update()
     {
         LinkedList<Person> temp = new LinkedList<Person>(Updater.GetAll().values());
         LinkedList<VisualPerson>  temp2 = new LinkedList<VisualPerson>();
@@ -105,18 +105,13 @@ public class Model {
         return Add(FXCollections.observableList(temp2));
     }
 
-    void Delete(VisualPerson person)
+    public void Delete(VisualPerson person)
     {
         Updater.DeletePerson(person.getPerson().GetName());
         VisualPersonData.removeAll(person);
     }
 
-    void Sinhronize()
-    {
-
-    }
-
-    Model()
+    public Model()
     {
         LinkedList<Person> temp = new LinkedList<Person>(Updater.GetAll().values());
         LinkedList<VisualPerson>  temp2 = new LinkedList<VisualPerson>();
