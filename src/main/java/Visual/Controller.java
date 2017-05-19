@@ -97,6 +97,7 @@ public class Controller {
     Model model;
 
     private StringProperty GetVisualParametr(Object param) {
+
         return new SimpleStringProperty(param.toString());
     }
 
