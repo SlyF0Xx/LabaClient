@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Set;
 
 public class Controller {
@@ -89,6 +90,9 @@ public class Controller {
 
     @FXML
     private Button FilterButton;
+
+    @FXML
+    private Button ChangeLoc;
 
     private Laba0 main;
     private Stage mainStage;
@@ -328,6 +332,8 @@ public class Controller {
             if(controller!=null) model.Filter(controller.GetInfo());
             else model.Filter(null);
         });
+
+        ChangeLoc.setOnAction(event -> Laba0.ChangeLocation( new Locale(Text.getText().split(" ")[0], Text.getText().split(" ")[1])));
     }
 
     @FXML

@@ -8,6 +8,21 @@ import java.util.ListResourceBundle;
 public class StatsBundle_nn_NO extends ListResourceBundle {
     @Override
     protected Object[][] getContents() {
-        return new Object[0][];
+        return new Object[][]{
+                { "Name", new String("УДАЛИТЬ!") },
+                { "LegCount", new String("УДАЛИТЬ!") },
+                { "LegIndex", new String("УДАЛИТЬ!") },
+                { "LegSize", new String("УДАЛИТЬ!") },
+                { "LegWashed", new String("УДАЛИТЬ!") },
+                { "LegBarefoot", new String("УДАЛИТЬ!") },
+                { "LocationName", new String("УДАЛИТЬ!") },
+                { "Came", new String("УДАЛИТЬ!") },
+                { "Wait", new String("УДАЛИТЬ!") },
+                { "Delete", new String("УДАЛИТЬ!") },
+                { "Actions", new String("УДАЛИТЬ!") },
+                { "SelecetCommand", new String("УДАЛИТЬ!") },
+                { "Execute", new String("УДАЛИТЬ!") },
+                { "Filter", new String("УДАЛИТЬ!") },
+        };
     }
 }

@@ -16,7 +16,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToolBar?>
-<!--><?import javafx.scene.effect.Light.Distant?><!-->
 <?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -26,7 +25,9 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 
-<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="607.0" prefWidth="1038.0" style="-fx-background-color: #5d5d5d;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Visual.Controller">
+<!--><?import javafx.scene.effect.Light.Distant?><!-->
+
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1038.0" style="-fx-background-color: #5d5d5d;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Visual.Controller">
     <children>
         <MenuBar maxHeight="22.0" minHeight="22.0" prefHeight="22.0" prefWidth="968.0" style="-fx-background-color: #5d5d5d;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
@@ -53,7 +54,7 @@
                         <TableColumn fx:id="LocationName" maxWidth="5000.0" minWidth="10.0" prefWidth="175.0" text="Название местоположения" />
                         <TableColumn fx:id="Came" prefWidth="75.0" text="Приход =)" />
                         <TableColumn fx:id="Wait" prefWidth="75.0" text="Ожидание" />
-                        <TableColumn fx:id="Delete" maxWidth="5000.0" minWidth="10.0" prefWidth="58.0" text="Удалить" />
+                        <TableColumn fx:id="Delete" maxWidth="5000.0" minWidth="10.0" prefWidth="58.0" text="%Delete" />
                         <TableColumn fx:id="Actions" maxWidth="5000.0" minWidth="8.0" prefWidth="117.0" text="Взаимодействие" />
                     </columns>
                     <HBox.margin>
@@ -136,6 +137,7 @@
                                     </stops>
                                 </LinearGradient>
                             </textFill></Button>
+                  <Button fx:id="ChangeLoc" mnemonicParsing="false" text="Button" />
                     </items>
                     <VBox.margin>
                         <Insets />

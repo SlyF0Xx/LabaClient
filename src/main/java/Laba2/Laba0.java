@@ -15,9 +15,12 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class Laba0
@@ -37,12 +40,16 @@ public class Laba0
     {
         return 1;
     }
-
+    private static Stage primaryStage;
     @Override
     public void start(Stage primaryStage) throws IOException {
         try
         {
+            this.primaryStage = primaryStage;
+
             FXMLLoader loader = new FXMLLoader();
+
+            loader.setResources(ResourceBundle.getBundle("I18n.StatsBundle", new Locale("ru", "RU")));
             loader.setLocation(Laba0.class.getResource("/sample.fxml"));
             //loader.setLocation(Laba0.class.getResource("../sample.fxml"));
 
@@ -52,6 +59,7 @@ public class Laba0
             Scene scene = new Scene(root, 300, 275);
             primaryStage.setScene(scene);
 
+            primaryStage.setScene(scene);
 
             Controller controller = loader.getController();
             controller.setMain(this, primaryStage);
@@ -80,6 +88,27 @@ public class Laba0
         }
         catch (Exception e)
         {
+            e.printStackTrace();
+        }
+    }
+
+    public static void ChangeLocation(Locale locale)
+    {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+
+            double width = primaryStage.getScene().getWidth();
+            double height = primaryStage.getScene().getHeight();
+
+            ((AnchorPane)(primaryStage.getScene().getRoot())).getChildren().clear();
+            loader.setResources(ResourceBundle.getBundle("I18n.StatsBundle", locale));
+            loader.setLocation(Laba0.class.getResource("/sample.fxml"));
+
+            Parent root = loader.load();
+            Scene rescene = new Scene(root, width , height);
+            primaryStage.setScene(rescene);
+            primaryStage.show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
