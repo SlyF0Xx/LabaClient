@@ -41,28 +41,49 @@ public class Laba0
         return 1;
     }
     private static Stage primaryStage;
+    private static Locale currentLocale;
+
+    public static Locale getCurrentLocale() {
+        return currentLocale;
+    }
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         try
         {
             this.primaryStage = primaryStage;
 
+            CreateWindow(new Locale("ru", "RU"), 600, 500);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void CreateWindow(Locale locale, double width, double height)
+    {
+        try {
+            currentLocale = locale;
             FXMLLoader loader = new FXMLLoader();
 
-            loader.setResources(ResourceBundle.getBundle("I18n.StatsBundle", new Locale("ru", "RU")));
+            if(primaryStage.getScene() != null)
+            {
+                ((AnchorPane)(primaryStage.getScene().getRoot())).getChildren().clear();
+            }
+
+            loader.setResources(ResourceBundle.getBundle("I18n.StatsBundle", locale));
             loader.setLocation(Laba0.class.getResource("/sample.fxml"));
-            //loader.setLocation(Laba0.class.getResource("../sample.fxml"));
 
             Parent root = loader.load();
             primaryStage.setTitle("Laba");
             primaryStage.setFullScreen(false);
-            Scene scene = new Scene(root, 300, 275);
-            primaryStage.setScene(scene);
-
-            primaryStage.setScene(scene);
+            Scene scene = new Scene(root, width , height);
 
             Controller controller = loader.getController();
             controller.setMain(this, primaryStage);
+
+            primaryStage.setScene(scene);
 
             primaryStage.heightProperty().addListener(new ChangeListener() {
                 @Override
@@ -84,29 +105,6 @@ public class Laba0
                     }
             );
 
-            primaryStage.show();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public static void ChangeLocation(Locale locale)
-    {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-
-            double width = primaryStage.getScene().getWidth();
-            double height = primaryStage.getScene().getHeight();
-
-            ((AnchorPane)(primaryStage.getScene().getRoot())).getChildren().clear();
-            loader.setResources(ResourceBundle.getBundle("I18n.StatsBundle", locale));
-            loader.setLocation(Laba0.class.getResource("/sample.fxml"));
-
-            Parent root = loader.load();
-            Scene rescene = new Scene(root, width , height);
-            primaryStage.setScene(rescene);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

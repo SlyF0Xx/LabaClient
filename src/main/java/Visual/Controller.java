@@ -3,6 +3,7 @@ package Visual;
 import Cmd.Command;
 import Cmd.Commands;
 import Cmd.Exit;
+import I18n.SupportI18n;
 import Laba2.Laba0;
 import Laba2.Leg;
 import Laba2.Person;
@@ -28,6 +29,7 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 public class Controller {
@@ -100,9 +102,10 @@ public class Controller {
 
     Model model;
 
-    private StringProperty GetVisualParametr(Object param) {
-
-        return new SimpleStringProperty(param.toString());
+    private StringProperty GetVisualParametr(Object param, String key) {
+        StringProperty temp = new SimpleStringProperty(param.toString());
+        temp.bind(SupportI18n.createStringBinding(key, temp.get()));
+        return temp;
     }
 
     private void CreateRowButtonDelete()
@@ -120,6 +123,7 @@ public class Controller {
                 else
                 {
                     item = new Button("Du! Du hast!");
+                    item.textProperty().bind(SupportI18n.createStringBinding("ButtonDelete", ""));
                     item.setPrefHeight(table.getFixedCellSize());
                     //item.setPrefWidth(getWidth());
                     item.setOnAction(event -> {
@@ -247,24 +251,24 @@ public class Controller {
 
     private void SetTableValueFactory()
     {
-        Name.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetName()));
-        LegCount.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetLegCount()));
+        Name.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetName(), "String"));
+        LegCount.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetLegCount(), "Integer"));
 
         LegIndex.setCellValueFactory(cellData-> new SimpleObjectProperty<Spinner<Integer>>(new Spinner<Integer>(0, Integer.valueOf(LegCount.getCellData(cellData.getValue()))-1, cellData.getValue().getLegIndex())));
 
         LegSize.setCellValueFactory(cellData->
-                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].GetSize())
+                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].GetSize(),"Integer")
         );
 
         LegWashed.setCellValueFactory(cellData->
-                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].IsWashed()));
+                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].IsWashed()? 2:1, "Boolean"));
 
         LegBarefoot.setCellValueFactory(cellData->
-                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].IsBarefoot()));
+                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].IsBarefoot()? 2:1, "Boolean"));
 
-        LocationName.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetPlace().GetPosition()));
-        Came.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsCame()));
-        Wait.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsWait()));
+        LocationName.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetPlace().GetPosition(), "String"));
+        Came.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsCame()? 2:1 , "Boolean"));
+        Wait.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsWait()? 2:1, "Boolean"));
     }
 
     private void SetHadlersAndListeners()
@@ -333,7 +337,10 @@ public class Controller {
             else model.Filter(null);
         });
 
-        ChangeLoc.setOnAction(event -> Laba0.ChangeLocation( new Locale(Text.getText().split(" ")[0], Text.getText().split(" ")[1])));
+        ChangeLoc.setOnAction(event -> main.CreateWindow( new Locale(Text.getText().split(" ")[0], Text.getText().split(" ")[1]),
+                mainStage.getScene().getWidth(),
+                mainStage.getScene().getHeight()
+        ));
     }
 
     @FXML
@@ -398,6 +405,7 @@ public class Controller {
 
         Parent root = null;
         try {
+            loader.setResources(ResourceBundle.getBundle("I18n.StatsBundle", main.getCurrentLocale()));
             root = loader.load();
             Stage FilterStage = new Stage();
             FilterStage.setTitle("Filter");

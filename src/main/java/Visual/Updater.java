@@ -22,6 +22,7 @@ public class Updater{
     public static void Disconect()
     {
         try {
+            //TODO Добавить команду отключение от сервера
             clientChannel.disconnect();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package Visual;
 
+import I18n.SupportI18n;
 import Laba2.Location;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,14 +27,16 @@ public class MyMenu {
     {
         CameTextField = new TextField();
         CameCustomMenuItem = new CustomMenuItem(CameTextField, false);
-        CameSideMenu = new Menu("came", null, CameCustomMenuItem);
-
+        CameSideMenu = new Menu("%MenuCame", null, CameCustomMenuItem);
+        CameSideMenu.textProperty().bind(SupportI18n.createStringBinding("MenuCame", ""));
 
         WaitTextField = new TextField();
         WaitCustomMenuItem = new CustomMenuItem(WaitTextField, false);
-        WaitSideMenu = new Menu("wait", null, WaitCustomMenuItem);
+        WaitSideMenu = new Menu("%MenuWait", null, WaitCustomMenuItem);
+        WaitSideMenu.textProperty().bind(SupportI18n.createStringBinding("MenuWait", ""));
 
-        menuButton = new MenuButton("Actions", null, CameSideMenu, WaitSideMenu);
+        menuButton = new MenuButton("%MenuActions", null, CameSideMenu, WaitSideMenu);
+        menuButton.textProperty().bind(SupportI18n.createStringBinding("MenuActions", ""));
 
         CameTextField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
