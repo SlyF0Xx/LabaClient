@@ -1,12 +1,12 @@
 package Laba2;
 
-import Visual.Controller;
-import Visual.Model;
-import javafx.application.Platform;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+
+import Visual.Controller;
+import Visual.Model;
+import javafx.application.Platform;
 
 /**
  * Created by SlyFox on 17.05.2017.

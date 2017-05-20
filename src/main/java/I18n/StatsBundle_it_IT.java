@@ -9,59 +9,69 @@ public class StatsBundle_it_IT extends ListResourceBundle {
     @Override
     protected Object[][] getContents() {
         return new Object[][]{
-                { "File", new String("Файл!") },
-                { "Name", new String("Имя") },
-                { "LegCount", new String("Кол-во ног") },
-                { "LegIndex", new String("Просматриваемая нога") },
-                { "LegSize", new String("Размер ноги") },
-                { "LegWashed", new String("Вымытость ноги") },
-                { "LegBarefoot", new String("Обутость ноги") },
-                { "LocationName", new String("Название местоположения") },
-                { "Came", new String("Приход") },
-                { "Wait", new String("Ожидание") },
-                { "Delete", new String("УДАЛИТЬ!") },
-                { "Actions", new String("Действие") },
-                { "SelecetCommand", new String("Выберите команду") },
-                { "Execute", new String("Выполнить") },
+        		{ "Boolean", new String( "{0, choice, 0#no | 1#sì }")},
+                { "Integer", new String( "{0}")},
+                { "String", new String( "{0}")},
+
+                { "File", new String("il file!") },
+                { "Name", new String("nome") },
+                { "LegCount", new String("numero di gambe") },
+                { "LegIndex", new String("corrente gamba") },
+                { "LegSize", new String("numero di scarpe") },
+                { "LegWashed", new String("pulizia di gambe") },
+                { "LegBarefoot", new String("esistere di calzature") },
+                { "LocationName", new String("il nome della località") },
+                { "Came", new String("arrivo") },
+                { "Wait", new String("aspettativa") },
+                { "Delete", new String("rimozione") },
+                { "Actions", new String("effetto") },
+                { "SelecetCommand", new String("scegliere di comanda") },
+                { "Execute", new String("eseguire") },
+
+                { "MenuCame", new String("Фильтровать") },
+                { "MenuWait", new String("Фильтровать") },
+                { "MenuActions", new String("Фильтровать") },
+
+                { "ButtonDelete", new String("Фильтровать") },
 
                 { "Filter", new String("Фильтровать") },
 
-                { "FilterChoose", new String("Выберите фильтры") },
-                { "FilterName", new String("Имя") },
-                { "FilterLocation", new String("Местоположение") },
-                { "FilterLegCount", new String("Кол-во ног") },
-                { "FilterSearchForAll", new String("Полные совпадения") },
+                { "FilterChoose", new String("scegliere di filtro") },
+                { "FilterName", new String("nome") },
+                { "FilterLocation", new String("situazione") },
+                { "FilterLegCount", new String("numero di gambe") },
+                { "FilterSearchForAll", new String("esatto coincidenza") },
 
 
-                { "FilterLegSize", new String("Размер ног") },
+                { "FilterLegSize", new String("numero di scarpe") },
 
-                { "FilterBigLeg", new String("Большие") },
-                { "FilterMiddleLeg", new String("Средние") },
-                { "FilterSmallLeg", new String("Маленькие") },
-
-
-                { "FilterLegWashed", new String("Вымытость ног") },
-
-                { "FilterIsWashedTrue", new String("Вымыты") },
-                { "FilterIsWashedFalse", new String("Не вымыты") },
+                { "FilterBigLeg", new String("grande") },
+                { "FilterMiddleLeg", new String("media") },
+                { "FilterSmallLeg", new String("piccolo") },
 
 
-                { "FilterLegBarefoot", new String("Обутость ног") },
+                { "FilterLegWashed", new String("purezza di gambe") },
 
-                { "FilterIsBarefootTrue", new String("Обуты") },
-                { "FilterIsBarefootFalse", new String("Разуты") },
-
-
-                { "FilterCame", new String("Приход") },
-
-                { "FilterIsCameTrue", new String("Произошёл") },
-                { "FilterIsCameFalse", new String("Не произошёл") },
+                { "FilterIsWashedTrue", new String("pulito") },
+                { "FilterIsWashedFalse", new String("disordinato") },
 
 
-                { "FilterWait", new String("Ожидание") },
+                { "FilterLegBarefoot", new String("esistere di calzature") },
 
-                { "FilterIsWaitTrue", new String("Ждёт") },
-                { "FilterIsWaitFalse", new String("Не ждёт") },
+                { "FilterIsBarefootTrue", new String("ha scarpe") },
+                { "FilterIsBarefootFalse", new String("ha no scarpe") },
+
+
+                { "FilterCame", new String("arrivo") },
+
+                { "FilterIsCameTrue", new String("sono venuto") },
+                { "FilterIsCameFalse", new String("no sono venuto") },
+
+
+                { "FilterWait", new String("aspettativa") },
+
+                { "FilterIsWaitTrue", new String("si aspetta") },
+                { "FilterIsWaitFalse", new String("non si aspetta") },
         };
     }
 }

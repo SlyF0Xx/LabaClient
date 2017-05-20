@@ -4,6 +4,10 @@ package Laba2;/*
  * and open the template in the editor.
  */
 
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import Visual.Controller;
 import Visual.Updater;
 import javafx.application.Application;
@@ -17,10 +21,6 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 
 public class Laba0

@@ -9,59 +9,69 @@ public class StatsBundle_nn_NO extends ListResourceBundle {
     @Override
     protected Object[][] getContents() {
         return new Object[][]{
-                { "File", new String("Файл!") },
-                { "Name", new String("Имя") },
-                { "LegCount", new String("Кол-во ног") },
-                { "LegIndex", new String("Просматриваемая нога") },
-                { "LegSize", new String("Размер ноги") },
-                { "LegWashed", new String("Вымытость ноги") },
-                { "LegBarefoot", new String("Обутость ноги") },
-                { "LocationName", new String("Название местоположения") },
-                { "Came", new String("Приход") },
-                { "Wait", new String("Ожидание") },
-                { "Delete", new String("УДАЛИТЬ!") },
-                { "Actions", new String("Действие") },
-                { "SelecetCommand", new String("Выберите команду") },
-                { "Execute", new String("Выполнить") },
+                { "Boolean", new String( "{0, choice, 0#ikke | 1#ja }")},
+                { "Integer", new String( "{0}")},
+                { "String", new String( "{0}")},
+
+                { "File", new String("Fil!") },
+                { "Name", new String("navn") },
+                { "LegCount", new String("antall ben") },
+                { "LegIndex", new String("ser på foten") },
+                { "LegSize", new String("skostørrelse") },
+                { "LegWashed", new String("ren fot") },
+                { "LegBarefoot", new String("har sko") },
+                { "LocationName", new String("stedsnavn") },
+                { "Came", new String("kommer") },
+                { "Wait", new String("forventning") },
+                { "Delete", new String("fjerne!") },
+                { "Actions", new String("effekt") },
+                { "SelecetCommand", new String("velg lag") },
+                { "Execute", new String("utføre") },
+
+                { "MenuCame", new String("Фильтровать") },
+                { "MenuWait", new String("Фильтровать") },
+                { "MenuActions", new String("Фильтровать") },
+
+                { "ButtonDelete", new String("Фильтровать") },
 
                 { "Filter", new String("Фильтровать") },
 
-                { "FilterChoose", new String("Выберите фильтры") },
-                { "FilterName", new String("Имя") },
-                { "FilterLocation", new String("Местоположение") },
-                { "FilterLegCount", new String("Кол-во ног") },
-                { "FilterSearchForAll", new String("Полные совпадения") },
+                { "FilterChoose", new String("velg filtre") },
+                { "FilterName", new String("navn") },
+                { "FilterLocation", new String("plassering") },
+                { "FilterLegCount", new String("antall ben") },
+                { "FilterSearchForAll", new String("uforkortet sammentreff ") },
 
 
-                { "FilterLegSize", new String("Размер ног") },
+                { "FilterLegSize", new String("skostørrelse") },
 
-                { "FilterBigLeg", new String("Большие") },
-                { "FilterMiddleLeg", new String("Средние") },
-                { "FilterSmallLeg", new String("Маленькие") },
-
-
-                { "FilterLegWashed", new String("Вымытость ног") },
-
-                { "FilterIsWashedTrue", new String("Вымыты") },
-                { "FilterIsWashedFalse", new String("Не вымыты") },
+                { "FilterBigLeg", new String("stor") },
+                { "FilterMiddleLeg", new String("gjennomsnittlig") },
+                { "FilterSmallLeg", new String("liten") },
 
 
-                { "FilterLegBarefoot", new String("Обутость ног") },
+                { "FilterLegWashed", new String("ren fot") },
 
-                { "FilterIsBarefootTrue", new String("Обуты") },
-                { "FilterIsBarefootFalse", new String("Разуты") },
-
-
-                { "FilterCame", new String("Приход") },
-
-                { "FilterIsCameTrue", new String("Произошёл") },
-                { "FilterIsCameFalse", new String("Не произошёл") },
+                { "FilterIsWashedTrue", new String("ren") },
+                { "FilterIsWashedFalse", new String("rotete") },
 
 
-                { "FilterWait", new String("Ожидание") },
+                { "FilterLegBarefoot", new String("har sko") },
 
-                { "FilterIsWaitTrue", new String("Ждёт") },
-                { "FilterIsWaitFalse", new String("Не ждёт") },
+                { "FilterIsBarefootTrue", new String("det er") },
+                { "FilterIsBarefootFalse", new String("har ikke") },
+
+
+                { "FilterCame", new String("kommer") },
+
+                { "FilterIsCameTrue", new String("jeg kom") },
+                { "FilterIsCameFalse", new String("Jeg kom ikke") },
+
+
+                { "FilterWait", new String("forventning") },
+
+                { "FilterIsWaitTrue", new String("venter på") },
+                { "FilterIsWaitFalse", new String("ikke vente") },
         };
     }
 }

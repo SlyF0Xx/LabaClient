@@ -1,4 +1,4 @@
-package I18n;
+﻿package I18n;
 
 import java.util.ListResourceBundle;
 

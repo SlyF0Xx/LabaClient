@@ -1,6 +1,6 @@
 package Visual;
 
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 /**
  * Created by SlyFox on 18.04.2017.

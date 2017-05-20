@@ -1,11 +1,12 @@
 package IO;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.util.List;
+
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
-
-import java.io.IOException;
-import java.lang.reflect.*;
-import java.util.List;
 
 
 public class Parser {

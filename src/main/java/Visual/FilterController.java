@@ -1,13 +1,13 @@
 package Visual;
 
+import java.util.regex.Pattern;
+
 import Laba2.Leg;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
-
-import java.util.regex.Pattern;
 
 /**
  * Created by SlyFox on 18.04.2017.

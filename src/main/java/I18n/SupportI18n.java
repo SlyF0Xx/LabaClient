@@ -1,12 +1,12 @@
 package I18n;
 
-import Laba2.Laba0;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.property.SimpleObjectProperty;
-
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import Laba2.Laba0;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.property.SimpleObjectProperty;
 
 /**
  * Created by SlyFox on 20.05.2017.

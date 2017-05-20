@@ -1,11 +1,11 @@
 package Visual;
 
+import java.util.LinkedList;
+
 import Laba2.Leg;
 import Laba2.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.LinkedList;
 
 /**
  * Created by SlyFox on 26.04.2017.
