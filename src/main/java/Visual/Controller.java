@@ -1,15 +1,5 @@
 package Visual;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import Cmd.Command;
 import Cmd.Commands;
 import Cmd.Exit;
@@ -18,6 +8,9 @@ import Laba2.Laba0;
 import Laba2.Leg;
 import Laba2.Person;
 import Laba2.Reciver;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,21 +21,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 public class Controller {
     @FXML
@@ -114,7 +102,7 @@ public class Controller {
 
     Model model;
 
-    private StringProperty GetVisualParametr(Object param, String key) {
+    private static StringProperty GetVisualParametr(Object param, String key) {
         StringProperty temp = new SimpleStringProperty(param.toString());
         temp.bind(SupportI18n.createStringBinding(key, temp.get()));
         return temp;
@@ -440,13 +428,13 @@ public class Controller {
         Execute(BoxCommands.getValue(),Text.getText());
     }
 
-    public static void InitAlert(String message)
+    public static void InitAlert(String key)
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Предупреждение!");
         alert.setHeaderText(null);
 
-        alert.setContentText(message);
+        alert.contentTextProperty().bind(SupportI18n.createStringBinding(key));
         alert.showAndWait();
     }
 
@@ -469,20 +457,20 @@ public class Controller {
                         Zoom();
                     }
 
-                    Platform.runLater(() -> InitAlert("Успешно!"));
+                    Platform.runLater(() -> InitAlert("Success"));
                 } catch (FileNotFoundException e) {
-                    Platform.runLater(() -> InitAlert("Файл не найден"));
+                    Platform.runLater(() -> InitAlert("FileNotFound"));
                 } catch (IOException e) {
-                    Platform.runLater(() -> InitAlert("Введите в поле ввода элеенты в json и убедитесь в наличии соотвествующего файла и установки переменной среды окружения ReadFileDir"));
+                    Platform.runLater(() -> InitAlert("InputJSON"));
                 } catch (InstantiationException e) {
-                    Platform.runLater(() -> InitAlert("Невозможно создать объект класса. Возмжно, класс не имеет конструктора без параметров. Убедитесь в корректности файла"));
+                    Platform.runLater(() -> InitAlert("CannotCreateObject"));
                 } catch (IllegalAccessException e) {
-                    Platform.runLater(() -> InitAlert("Невозможно создать объект класса. Возмжно, класс не имеет конструктора без параметров. Убедитесь в корректности файла"));
+                    Platform.runLater(() -> InitAlert("AccessObjectDeny"));
                 } catch (ClassNotFoundException e) {
-                    Platform.runLater(() -> InitAlert("Класс не найден. Объекты данного класа не поддерживаются программой"));
+                    Platform.runLater(() -> InitAlert("ClassNotFound"));
                 } catch (Exception e)
                 {
-                    Platform.runLater(() -> InitAlert("Неопознанная ошибка"));
+                    Platform.runLater(() -> InitAlert("UnknownException"));
                 }
             }
         };
@@ -569,7 +557,7 @@ public class Controller {
         }
         else
         {
-            Platform.runLater(() -> InitAlert("Введите в поле ввода параметров название класса"));
+            Platform.runLater(() -> InitAlert("InputParams"));
         }
 
     }

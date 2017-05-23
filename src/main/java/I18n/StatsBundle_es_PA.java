@@ -13,7 +13,17 @@ public class StatsBundle_es_PA extends ListResourceBundle {
                 { "Integer", new String( "{0}")},
                 { "String", new String( "{0}")},
 
-                { "File", new String("archivo") },
+               { "Success", new String("Éxito!") },
+
+               { "FileNotFound", new String("archivo no encontrado") },
+               { "InputJSON", new String("Introduzca en el campo de entrada eleenty en JSON y asegurarse de que tiene el archivo a juego y establece la variable de entorno ReadFileDir") },
+               { "CannotCreateObject", new String("No se puede crear un objeto de la clase. Vozmzhno clase no tiene un constructor sin parámetros. Asegúrese de que el archivo de corrección") },
+               { "AccessObjectDeny", new String("No se puede crear un objeto de clase. Vozmzhno clase no tiene un constructor sin parámetros. Asegúrese de que el archivo de corrección") },
+               { "ClassNotFound", new String("La clase no se encuentra. Los objetos de esta Klas no son compatibles!") },
+               { "UnknownException", new String("Error no especificado") },
+               { "InputParams", new String("Introduzca los parámetros en el nombre de la clase campo de entrada") },
+
+               { "File", new String("archivo") },
                 { "Name", new String("nombre") },
                 { "LegCount", new String("Número de patas") },
                 { "LegIndex", new String("Pierna actual") },

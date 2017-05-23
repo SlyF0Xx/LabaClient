@@ -13,6 +13,16 @@ public class StatsBundle_it_IT extends ListResourceBundle {
                 { "Integer", new String( "{0}")},
                 { "String", new String( "{0}")},
 
+                { "Success", new String("Success!") },
+
+                { "FileNotFound", new String("File non trovato") },
+                { "InputJSON", new String("Inserire nel campo di immissione eleenty in JSON e assicurarsi di avere file corrispondente e impostare la variabile ReadFileDir dell'ambiente") },
+                { "CannotCreateObject", new String("Non è possibile creare un oggetto della classe. Class Vozmzhno non ha un costruttore senza parametri. Assicurarsi che il file correttezza") },
+                { "AccessObjectDeny", new String("Non è possibile creare un oggetto della classe. Class Vozmzhno non ha un costruttore senza parametri. Assicurarsi che il file correttezza") },
+                { "ClassNotFound", new String("La classe non è stato trovato. Gli oggetti di questo Klas non sono supportati!") },
+                { "UnknownException", new String("errore non specificato") },
+                { "InputParams", new String("nserire i parametri nel nome della classe campo di input") },
+
                 { "File", new String("il file!") },
                 { "Name", new String("nome") },
                 { "LegCount", new String("numero di gambe") },

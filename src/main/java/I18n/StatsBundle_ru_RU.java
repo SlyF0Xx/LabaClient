@@ -1,4 +1,4 @@
-﻿package I18n;
+package I18n;
 
 import java.util.ListResourceBundle;
 
@@ -9,9 +9,20 @@ public class StatsBundle_ru_RU extends ListResourceBundle {
     @Override
     protected Object[][] getContents() {
         return new Object[][]{
-                { "Boolean", new String( "{0, choice, 0#no | 1#yes }")},
+                { "Boolean", new String( "{0, choice, 0#нет | 1#да }")},
                 { "Integer", new String( "{0}")},
                 { "String", new String( "{0}")},
+
+                { "Success", new String("Успешно!") },
+
+                { "FileNotFound", new String("Файл не найден") },
+                { "InputJSON", new String("Введите в поле ввода элеенты в json и убедитесь в наличии соотвествующего файла и установки переменной среды окружения ReadFileDir") },
+                { "CannotCreateObject", new String("Невозможно создать объект класса. Возмжно, класс не имеет конструктора без параметров. Убедитесь в корректности файла") },
+                { "AccessObjectDeny", new String("Невозможно создать объект класса. Возмжно, класс не имеет конструктора без параметров. Убедитесь в корректности файла") },
+                { "ClassNotFound", new String("Класс не найден. Объекты данного класа не поддерживаются программой!") },
+                { "UnknownException", new String("Неопознанная ошибка") },
+                { "InputParams", new String("Введите в поле ввода параметров название класса") },
+
 
                 { "File", new String("Файл!") },
                 { "Name", new String("Имя") },
@@ -71,7 +82,7 @@ public class StatsBundle_ru_RU extends ListResourceBundle {
                 { "FilterWait", new String("Ожидание") },
 
                 { "FilterIsWaitTrue", new String("Ждёт") },
-                { "FilterIsWaitFalse", new String("Не ждёт") },
+                { "FilterIsWaitFalse", new String("Не ждёт") }
         };
     }
 }

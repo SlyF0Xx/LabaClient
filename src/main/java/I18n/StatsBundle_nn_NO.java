@@ -13,6 +13,16 @@ public class StatsBundle_nn_NO extends ListResourceBundle {
                 { "Integer", new String( "{0}")},
                 { "String", new String( "{0}")},
 
+                { "Success", new String("suksess") },
+
+                { "FileNotFound", new String("Finner ikke filen") },
+                { "InputJSON", new String("Skriv i inntastingsfeltet eleenty i JSON og sørg for at du har passende fil og sette variabelen ReadFileDir miljø") },
+                { "CannotCreateObject", new String("Du kan ikke lage et objekt av klassen. Vozmzhno klassen ikke har en konstruktør uten parametre. Kontroller at filen korrekthet") },
+                { "AccessObjectDeny", new String("Du kan ikke lage et objekt av klassen. Vozmzhno klassen ikke har en konstruktør uten parametre. Kontroller at filen korrekthet") },
+                { "ClassNotFound", new String("Klassen er ikke funnet. Formålene med denne Klas ikke støttes!") },
+                { "UnknownException", new String("Uspesifisert feil") },
+                { "InputParams", new String("Skriv parametrene i inngangsfeltklassenavn") },
+
                 { "File", new String("Fil!") },
                 { "Name", new String("navn") },
                 { "LegCount", new String("antall ben") },
