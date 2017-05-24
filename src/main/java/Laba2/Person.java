@@ -3,24 +3,26 @@
  */
 package Laba2;
 
+import Exceptions.ExceptionWrongName;
+import IO.NotParse;
+import ORM.Atribute;
+import ORM.Entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import Exceptions.ExceptionWrongName;
-import IO.NotParse;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 /**
  * @author SlyFox
  */
-public abstract class Person  implements Waitable,Subscribable,Comparable, Serializable
+@Entity(name = "Person")
+public abstract class Person  implements Waitable, Subscribable,Comparable, Serializable
 {
     /**
      *  Smth
@@ -81,15 +83,15 @@ public abstract class Person  implements Waitable,Subscribable,Comparable, Seria
     @JsonProperty("Legs")
     private Leg Legs[];
 
-    @JsonProperty("Place")
-    private Location Place;
-
+    @Atribute(name = "Name", type = "Text", isPrimaryKey = true)
     @JsonProperty("Name")
     private String Name;
 
+    @Atribute(name = "isCame", type = "Boolean")
     @JsonProperty("Came")
     private boolean Came;
 
+    @Atribute(name = "isWait", type = "Boolean")
     @JsonProperty("wait")
     private boolean wait;
 
@@ -99,8 +101,15 @@ public abstract class Person  implements Waitable,Subscribable,Comparable, Seria
 
     @NotParse
     @JsonIgnore
-    private Map<String,Person> subscribers;
+    private Map<String, Person> subscribers;
 
+    @NotParse
+    @Atribute(name = "ClassName", type = "TEXT")
+    private int zaglushka;
+
+    @Atribute(name = "Place", type = "TEXT", Reference = "Place")
+    @JsonProperty("Place")
+    private Location Place;
 
     public Person GetSubjectForSubscribing(){return SubjectForSubscribing;}
 
@@ -168,7 +177,7 @@ public abstract class Person  implements Waitable,Subscribable,Comparable, Seria
 
         Came = true;
         Place = Where;
-        for(Map.Entry<String,Person> entry : subscribers.entrySet())
+        for(Map.Entry<String, Person> entry : subscribers.entrySet())
         {
             if(Where.equals(entry.getValue().GetPlace()))
             {
@@ -187,22 +196,12 @@ public abstract class Person  implements Waitable,Subscribable,Comparable, Seria
         subscribers.remove(name);
     }
 
-    public Map<String,Person> GetSubscribers(){return subscribers;}
+    public Map<String, Person> GetSubscribers(){return subscribers;}
 
 
-    public Person(Leg[] Legs,Location Place,String Name) throws ExceptionWrongName
+    public Person(Leg[] Legs, Location Place, String Name) throws ExceptionWrongName
     {
-        if(Legs.length==1)
-        {
-            this.Legs = new Leg[1];
-            this.Legs = Legs;
-        }
-        else
-        {
-            this.Legs = new Leg[2];
-            this.Legs[0] = Legs[0];
-            this.Legs[1] = Legs[1];
-        }
+        this.Legs = Legs;
 
         //Pattern p = Pattern.compile("[a-z,A-Z,А-Я,а-я]+,' ',[a-z,A-Z,А-Я,а-я]+");
         Pattern p = Pattern.compile("[a-z,A-Z,А-Я,а-я]+\\s?[a-z,A-Z,А-Я,а-я]+");
@@ -214,10 +213,10 @@ public abstract class Person  implements Waitable,Subscribable,Comparable, Seria
         this.Name = Name;
         this.Place = Place;
         //subscribers = new HashMap<String,Person>();
-        subscribers = new HashMap<String,Person>();
+        subscribers = new HashMap<String, Person>();
     }
 
-    public Person(Leg[] Legs,Location Place,String Name, Boolean IsCame, Boolean IsWait) throws ExceptionWrongName
+    public Person(Leg[] Legs, Location Place, String Name, Boolean IsCame, Boolean IsWait) throws ExceptionWrongName
     {
         if(Legs.length==1)
         {
@@ -231,8 +230,8 @@ public abstract class Person  implements Waitable,Subscribable,Comparable, Seria
             this.Legs[1] = Legs[1];
         }
 
-        //Pattern p = Pattern.compile("[a-z,A-Z,А-Я,а-я]+,' ',[a-z,A-Z,А-Я,а-я]+");
-        Pattern p = Pattern.compile("[a-z,A-Z,А-Я,а-я]+\\s?[a-z,A-Z,А-Я,а-я]+");
+        Pattern p = Pattern.compile("[a-z,A-Z,А-Я,а-я]+' '?[a-z,A-Z,А-Я,а-я]+");
+        //Pattern p = Pattern.compile("[a-z,A-Z,А-Я,а-я]+\\s?[a-z,A-Z,А-Я,а-я]+");
         Matcher m = p.matcher(Name);
         if (m.find())
         {
@@ -241,7 +240,7 @@ public abstract class Person  implements Waitable,Subscribable,Comparable, Seria
         this.Name = Name;
         this.Place = Place;
         //subscribers = new HashMap<String,Person>();
-        subscribers = new HashMap<String,Person>();
+        subscribers = new HashMap<String, Person>();
         Came = IsCame;
         wait = IsWait;
     }
@@ -255,6 +254,6 @@ public abstract class Person  implements Waitable,Subscribable,Comparable, Seria
         Name = "";
         Place = new Location();
         //subscribers = new HashMap<String,Person>();
-        subscribers = new HashMap<String,Person>();
+        subscribers = new HashMap<String, Person>();
     }
 }

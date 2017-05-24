@@ -22,6 +22,7 @@ public class StatsBundle_ru_RU extends ListResourceBundle {
                 { "ClassNotFound", new String("Класс не найден. Объекты данного класа не поддерживаются программой!") },
                 { "UnknownException", new String("Неопознанная ошибка") },
                 { "InputParams", new String("Введите в поле ввода параметров название класса") },
+                { "Anons", new String("Анонс!") },
 
 
                 { "File", new String("Файл!") },
@@ -29,7 +30,7 @@ public class StatsBundle_ru_RU extends ListResourceBundle {
                 { "LegCount", new String("Кол-во ног") },
                 { "LegIndex", new String("Просматриваемая нога") },
                 { "LegSize", new String("Размер ноги") },
-                { "LegWashed", new String("Вымытость ноги") },
+                { "LegWashed", new String("Вымыт-3ость ноги") },
                 { "LegBarefoot", new String("Обутость ноги") },
                 { "LocationName", new String("Название местоположения") },
                 { "Came", new String("Приход") },

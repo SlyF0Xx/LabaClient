@@ -1,12 +1,12 @@
 package Laba2;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
-
 import Visual.Controller;
 import Visual.Model;
 import javafx.application.Platform;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
 
 /**
  * Created by SlyFox on 17.05.2017.
@@ -46,7 +46,7 @@ public class Reciver extends Thread {
                             break;
                         }
                         case "Announcement": {
-                            Platform.runLater(() -> Controller.InitAlert("Анонс!"));
+                            Platform.runLater(() -> Controller.InitAlert("Anons"));
                             if (model != null) {
                                 Thread temp = new Thread()
                                 {
