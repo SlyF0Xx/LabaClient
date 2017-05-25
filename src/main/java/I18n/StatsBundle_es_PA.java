@@ -22,7 +22,7 @@ public class StatsBundle_es_PA extends ListResourceBundle {
                { "ClassNotFound", new String("La clase no se encuentra. Los objetos de esta Klas no son compatibles!") },
                { "UnknownException", new String("Error no especificado") },
                { "InputParams", new String("Introduzca los parámetros en el nombre de la clase campo de entrada") },
-               { "Anons", new String("Анонс!") },
+               { "Anons", new String("anuncio!") },
 
 
 
@@ -41,13 +41,13 @@ public class StatsBundle_es_PA extends ListResourceBundle {
                 { "SelecetCommand", new String("Elegir comando") },
                 { "Execute", new String("Ejecutar") },
 
-                { "MenuCame", new String("Фильтровать") },
-                { "MenuWait", new String("Фильтровать") },
-                { "MenuActions", new String("Фильтровать") },
+                { "MenuCame", new String("vino") },
+                { "MenuWait", new String("Espere") },
+                { "MenuActions", new String("Comportamiento") },
 
-                { "ButtonDelete", new String("Фильтровать") },
+                { "ButtonDelete", new String("Borrar") },
 
-                { "Filter", new String("Фильтровать") },
+                { "Filter", new String("filtro") },
 
                 { "FilterChoose", new String("Elija los filtros") },
                 { "FilterName", new String("nombre") },

@@ -22,7 +22,7 @@ public class StatsBundle_nn_NO extends ListResourceBundle {
                 { "ClassNotFound", new String("Klassen er ikke funnet. Formålene med denne Klas ikke støttes!") },
                 { "UnknownException", new String("Uspesifisert feil") },
                 { "InputParams", new String("Skriv parametrene i inngangsfeltklassenavn") },
-                { "Anons", new String("Анонс!") },
+                { "Anons", new String("Kunngjøring!") },
 
 
                 { "File", new String("Fil!") },
@@ -40,13 +40,13 @@ public class StatsBundle_nn_NO extends ListResourceBundle {
                 { "SelecetCommand", new String("velg lag") },
                 { "Execute", new String("utføre") },
 
-                { "MenuCame", new String("Фильтровать") },
-                { "MenuWait", new String("Фильтровать") },
-                { "MenuActions", new String("Фильтровать") },
+                { "MenuCame", new String("kom") },
+                { "MenuWait", new String("Vente") },
+                { "MenuActions", new String("handlinger") },
 
-                { "ButtonDelete", new String("Фильтровать") },
+                { "ButtonDelete", new String("Slett") },
 
-                { "Filter", new String("Фильтровать") },
+                { "Filter", new String("filter") },
 
                 { "FilterChoose", new String("velg filtre") },
                 { "FilterName", new String("navn") },

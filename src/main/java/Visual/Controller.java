@@ -172,9 +172,12 @@ public class Controller {
         //commands.SetCommand("load", new Load());
         commands.SetCommand("exit", new Exit());
 
-
+        System.out.println("Готов к отправке команд");
 
         Set<String> coms = Updater.GetCommandNames();
+
+        System.out.println("Команды получены");
+
         for (String i: coms)
         {
             commands.SetCommand(i, new Command() {
@@ -359,6 +362,8 @@ public class Controller {
         //Person pers =  Updater.GetPerson("Mal");
 
         model = new Model();
+
+        System.out.println("Получены люди");
 
         Reciver.setModel(model);
 
