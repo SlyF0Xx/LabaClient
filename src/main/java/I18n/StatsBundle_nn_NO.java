@@ -22,6 +22,8 @@ public class StatsBundle_nn_NO extends ListResourceBundle {
                 { "ClassNotFound", new String("Klassen er ikke funnet. Formålene med denne Klas ikke støttes!") },
                 { "UnknownException", new String("Uspesifisert feil") },
                 { "InputParams", new String("Skriv parametrene i inngangsfeltklassenavn") },
+                { "Anons", new String("Анонс!") },
+
 
                 { "File", new String("Fil!") },
                 { "Name", new String("navn") },

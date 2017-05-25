@@ -172,6 +172,8 @@ public class Controller {
         //commands.SetCommand("load", new Load());
         commands.SetCommand("exit", new Exit());
 
+
+
         Set<String> coms = Updater.GetCommandNames();
         for (String i: coms)
         {

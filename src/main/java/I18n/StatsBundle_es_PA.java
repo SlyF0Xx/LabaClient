@@ -22,6 +22,9 @@ public class StatsBundle_es_PA extends ListResourceBundle {
                { "ClassNotFound", new String("La clase no se encuentra. Los objetos de esta Klas no son compatibles!") },
                { "UnknownException", new String("Error no especificado") },
                { "InputParams", new String("Introduzca los parámetros en el nombre de la clase campo de entrada") },
+               { "Anons", new String("Анонс!") },
+
+
 
                { "File", new String("archivo") },
                 { "Name", new String("nombre") },

@@ -22,6 +22,8 @@ public class StatsBundle_it_IT extends ListResourceBundle {
                 { "ClassNotFound", new String("La classe non è stato trovato. Gli oggetti di questo Klas non sono supportati!") },
                 { "UnknownException", new String("errore non specificato") },
                 { "InputParams", new String("nserire i parametri nel nome della classe campo di input") },
+                { "Anons", new String("Анонс!") },
+
 
                 { "File", new String("il file!") },
                 { "Name", new String("nome") },
