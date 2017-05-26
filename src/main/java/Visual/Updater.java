@@ -18,6 +18,7 @@ import java.util.Set;
 public class Updater{
     private static InetSocketAddress  Addr;
     private static  DatagramChannel clientChannel;
+    private static Reciver  reciver;
 
     public static void Disconect()
     {
@@ -45,14 +46,22 @@ public class Updater{
     public static void SetInetAddress()
     {
         try {
-            clientChannel = DatagramChannel.open();
+            if(Addr == null)
+            {
+                //Addr = new InetSocketAddress("192.168.43.22", 2222);
+                Addr = new InetSocketAddress("localhost", 2222);
+            }
+            if(clientChannel == null)
+            {
+                clientChannel = DatagramChannel.open();
+                clientChannel.connect(Addr);
+            }
 
-            Addr = new InetSocketAddress("192.168.43.22", 2222);
-            //Addr = new InetSocketAddress("localhost", 2222);
-
-            clientChannel.connect(Addr);
-
-            new Reciver(clientChannel).start();
+            if(reciver==null)
+            {
+                reciver = new Reciver(clientChannel);
+                reciver.start();
+            }
             //clientChannel.bind(Addr);
         } catch (IOException e) {
             e.printStackTrace();
@@ -123,7 +132,11 @@ public class Updater{
 
         try {
             clientChannel.receive(buffer);
-            return buffer.getInt(0);
+
+            int temp = buffer.getInt(0);
+            if (temp<0) throw new RuntimeException("WTF"+temp);
+            return temp;
+            //return buffer.getInt(0);
         } catch (IOException e) {
             e.printStackTrace();
         }

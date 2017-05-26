@@ -16,6 +16,7 @@ public class Reciver extends Thread {
     private static DatagramChannel clientChannel;
     private static Model model;
 
+
     public static synchronized boolean IsPrepareForTrnsmiting() {
         return PrepareForTrnsmiting;
     }

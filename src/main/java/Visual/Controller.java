@@ -194,7 +194,10 @@ public class Controller {
 
                 @Override
                 public boolean execute(Object... objects) throws Exception {
-                    return Updater.ExecuteCommand(i, (String) objects[0]);
+                    synchronized (Command.class)
+                    {
+                        return Updater.ExecuteCommand(i, (String) objects[0]);
+                    }
                 }
             });
         }
@@ -394,6 +397,7 @@ public class Controller {
 
     public void Zoom()
     {
+        ObservableList list = table.getItems();
         if(table.getHeight() - (table.getItems().size()+1)*table.getFixedCellSize() <0)
         {
             Slider.setVisible(true);
