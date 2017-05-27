@@ -12,6 +12,14 @@ public class StatsBundle_it_IT extends ListResourceBundle {
         		{ "Boolean", new String( "{0, choice, 0#no | 1#sì }")},
                 { "Integer", new String( "{0}")},
                 { "String", new String( "{0}")},
+                { "LegSizeEnum", new String( "{0, choice, 0#piccolo | 1#media | 2#grande}")},
+
+                { "true", new String( "sì")},
+                { "false", new String( "no")},
+
+                { "Small", new String( "piccolo")},
+                { "Medium", new String( "media")},
+                { "Big", new String( "grande")},
 
                 { "Success", new String("Success!") },
 

@@ -112,6 +112,7 @@ public class Laba0
     }
 
     public static void main(String[] args) {
+        System.out.println(Leg.Size.Big.getDeclaringClass());
         new RequestsResponcesTable();
 
         launch(args);

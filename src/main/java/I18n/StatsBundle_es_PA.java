@@ -9,9 +9,17 @@ public class StatsBundle_es_PA extends ListResourceBundle {
     @Override
     protected Object[][] getContents() {
        return new Object[][]{
-                { "Boolean", new String( "{0, choice, 0#no | 1#sí }")},
-                { "Integer", new String( "{0}")},
-                { "String", new String( "{0}")},
+               { "Boolean", new String( "{0, choice, 0#no | 1#sí }")},
+               { "Integer", new String( "{0}")},
+               { "String", new String( "{0}")},
+               { "LegSizeEnum", new String( "{0, choice, 0#pequeño | 1#promedio | 2#grande }")},
+
+               { "true", new String( "sí")},
+               { "false", new String( "no")},
+
+               { "Small", new String( "pequeño")},
+               { "Medium", new String( "promedio")},
+               { "Big", new String( "grande")},
 
                { "Success", new String("Éxito!") },
 

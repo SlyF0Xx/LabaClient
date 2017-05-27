@@ -265,18 +265,18 @@ public class Controller {
         LegIndex.setCellValueFactory(cellData-> new SimpleObjectProperty<Spinner<Integer>>(new Spinner<Integer>(0, Integer.valueOf(LegCount.getCellData(cellData.getValue()))-1, cellData.getValue().getLegIndex())));
 
         LegSize.setCellValueFactory(cellData->
-                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].GetSize(),"Integer")
+                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].GetSize().ordinal(),"LegSizeEnum")
         );
 
         LegWashed.setCellValueFactory(cellData->
-                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].IsWashed()? 2:1, "Boolean"));
+                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].IsWashed()? 1:0, "Boolean"));
 
         LegBarefoot.setCellValueFactory(cellData->
-                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].IsBarefoot()? 2:1, "Boolean"));
+                GetVisualParametr(cellData.getValue().getPerson().GetLegs()[LegIndex.getCellData(cellData.getValue()).getValue()].IsBarefoot()? 1:0, "Boolean"));
 
         LocationName.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetPlace().GetPosition(), "String"));
-        Came.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsCame()? 2:1 , "Boolean"));
-        Wait.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsWait()? 2:1, "Boolean"));
+        Came.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsCame()? 1:0 , "Boolean"));
+        Wait.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsWait()? 1:0, "Boolean"));
     }
 
     private void SetHadlersAndListeners()
@@ -290,7 +290,7 @@ public class Controller {
         LegBarefoot.setOnEditCommit(event ->
         {
             event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
-                    .SetBarefoot(Boolean.parseBoolean(event.getNewValue()));
+                    .SetBarefoot(SupportI18n.parseBoolean(event.getNewValue()));
             Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
         });
 
@@ -298,20 +298,20 @@ public class Controller {
         LegWashed.setOnEditCommit(event ->
          {
              event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
-                            .SetWashed(Boolean.parseBoolean(event.getNewValue()));
+                            .SetWashed(SupportI18n.parseBoolean(event.getNewValue()));
              Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
          });
 
         LegSize.setOnEditCommit(event ->
         {
             event.getRowValue().getPerson().GetLegs()[LegIndex.getCellData(table.getSelectionModel().getSelectedItem()).getValue()]
-                        .SetSize(Leg.Size.valueOf(event.getNewValue()));
+                        .SetSize((Leg.Size)SupportI18n.parseEnum(Leg.Size.class, event.getNewValue()));
             Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
         });
 
 
         Came.setOnEditCommit(event -> {
-            if(Boolean.parseBoolean(event.getNewValue()))
+            if(SupportI18n.parseBoolean(event.getNewValue()))
             {
                 model.GetVisualPersonData().get(table.getSelectionModel().getSelectedIndex()).getPerson().Come(table.getSelectionModel().getSelectedItem().getPerson().GetPlace());
                 Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
@@ -320,7 +320,7 @@ public class Controller {
 
         Wait.setOnEditCommit(event ->
         {
-                event.getRowValue().getPerson().SetWait(Boolean.parseBoolean(event.getNewValue()));
+                event.getRowValue().getPerson().SetWait(SupportI18n.parseBoolean(event.getNewValue()));
                 Updater.EditPerson(event.getRowValue().getPerson().GetName(), event.getRowValue().getPerson());
         });
 

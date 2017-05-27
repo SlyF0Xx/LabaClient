@@ -12,6 +12,14 @@ public class StatsBundle_ru_RU extends ListResourceBundle {
                 { "Boolean", new String( "{0, choice, 0#нет | 1#да }")},
                 { "Integer", new String( "{0}")},
                 { "String", new String( "{0}")},
+                { "LegSizeEnum", new String( "{0, choice, 0#Маленькие | 1#Средние| 2#Большие}")},
+
+                { "true", new String( "да")},
+                { "false", new String( "нет")},
+
+                { "Small", new String( "Маленькие")},
+                { "Medium", new String( "Средние")},
+                { "Big", new String( "Большие")},
 
                 { "Success", new String("Успешно!") },
 

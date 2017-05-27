@@ -12,6 +12,14 @@ public class StatsBundle_nn_NO extends ListResourceBundle {
                 { "Boolean", new String( "{0, choice, 0#ikke | 1#ja }")},
                 { "Integer", new String( "{0}")},
                 { "String", new String( "{0}")},
+                { "LegSizeEnum", new String( "{0, choice, 0#liten | 1#gjennomsnittlig| 2#stor}")},
+
+                { "true", new String( "ja")},
+                { "false", new String( "ikke")},
+
+                { "Small", new String( "liten")},
+                { "Medium", new String( "gjennomsnittlig")},
+                { "Big", new String( "stor")},
 
                 { "Success", new String("suksess") },
 
