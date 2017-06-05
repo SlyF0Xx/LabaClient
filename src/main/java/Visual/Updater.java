@@ -1,16 +1,20 @@
 package Visual;
 
-import Laba2.Person;
-import Laba2.Reciver;
-import Laba2.RequestsResponcesTable;
-
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
+import Laba2.Person;
+import Laba2.Reciver;
+import Laba2.RequestsResponcesTable;
 
 /**
  * Created by SlyFox on 26.04.2017.
@@ -231,7 +235,7 @@ public class Updater{
         SendObject(newValue);
     }
 
-    static void AddPerson(Person Value)
+    public static void AddPerson(Person Value)
     {
         if(Addr!=null)
         {
@@ -250,7 +254,7 @@ public class Updater{
         }
     }
 
-    static void DeletePerson(String name)
+    public static void DeletePerson(String name)
     {
         if(Addr!=null)
         {
