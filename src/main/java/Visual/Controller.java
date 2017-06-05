@@ -239,8 +239,13 @@ public class Controller {
                     item.valueProperty().addListener(
                             ((observable, oldValue, newValue) ->
                             {
-                                model.GetVisualPersonData().get(getIndex()).setLegIndex(newValue);
-
+                                try {
+                                    model.GetVisualPersonData().get(getIndex()).setLegIndex(newValue);
+                                }
+                                catch (IndexOutOfBoundsException e)
+                                {
+                                    System.out.println("Забавная ситуация. По какой-то причине программа не видит индекса, при этом успешно изменяет данные по нему же");
+                                }
                                 table.refresh();
                             })
                     );
