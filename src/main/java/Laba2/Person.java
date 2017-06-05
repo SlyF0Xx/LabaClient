@@ -3,20 +3,22 @@
  */
 package Laba2;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import Exceptions.ExceptionWrongName;
 import IO.NotParse;
 import ORM.Atribute;
 import ORM.Entity;
 import ORM.Relation;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.*;
 
 /**
  * @author SlyFox
@@ -25,6 +27,11 @@ import java.util.regex.*;
 public abstract class Person  implements Waitable,Subscribable,Comparable, Serializable
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1526447205206289019L;
+
+	/**
      *  Smth
      * @param o Person which will campare
      * @return 1 if hashCode parametr is bigger than hashCode of this object

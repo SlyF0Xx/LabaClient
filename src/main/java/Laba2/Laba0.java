@@ -4,11 +4,17 @@ package Laba2;/*
  * and open the template in the editor.
  */
 
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import Visual.Controller;
+import Visual.Sound;
 import Visual.Updater;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,10 +23,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import javafx.stage.WindowEvent;
 
 
 public class Laba0
@@ -105,6 +108,13 @@ public class Laba0
                     }
             );
 
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                	new Sound(Laba0.class.getResourceAsStream("/Larin.wav")).play().join();
+                	System.exit(0);
+                }
+            });  
+            
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,9 +124,7 @@ public class Laba0
     public static void main(String[] args) {
         System.out.println(Leg.Size.Big.getDeclaringClass());
         new RequestsResponcesTable();
-
         launch(args);
-
         Updater.Disconect();
     }
 }
