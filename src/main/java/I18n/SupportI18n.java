@@ -1,6 +1,7 @@
 package I18n;
 
 import Laba2.Laba0;
+import Visual.Controller;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -43,7 +44,8 @@ public class SupportI18n {
                 return enums[i];
             }
         }
-        return null;
+        Controller.InitAlert("CannotCreateObject");
+        return enums[0];
     }
 
     public static StringBinding createStringBinding(final String key, final Object... args)

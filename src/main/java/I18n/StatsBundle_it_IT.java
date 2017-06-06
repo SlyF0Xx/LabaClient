@@ -13,6 +13,7 @@ public class StatsBundle_it_IT extends ListResourceBundle {
                 { "Integer", new String( "{0}")},
                 { "String", new String( "{0}")},
                 { "LegSizeEnum", new String( "{0, choice, 0#piccolo | 1#media | 2#grande}")},
+                { "Time", new String( "{0}")},
 
                 { "true", new String( "sì")},
                 { "false", new String( "no")},
@@ -55,7 +56,7 @@ public class StatsBundle_it_IT extends ListResourceBundle {
                 { "ButtonDelete", new String("Elimina") },
 
                 { "Filter", new String("filtro") },
-
+                { "TimeColumn", new String("tempo") },
                 { "FilterChoose", new String("scegliere di filtro") },
                 { "FilterName", new String("nome") },
                 { "FilterLocation", new String("situazione") },
