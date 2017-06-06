@@ -82,6 +82,9 @@ public class Controller {
     private TableColumn<VisualPerson, MenuButton> Actions;
 
     @FXML
+    private TableColumn<VisualPerson, String> Time;
+
+    @FXML
     private ComboBox<Command> BoxCommands;
 
     @FXML
@@ -268,6 +271,8 @@ public class Controller {
         };
         });
 
+        Time.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
+
 
         CreateRowButtonDelete();
 
@@ -294,6 +299,8 @@ public class Controller {
         LocationName.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetPlace().GetPosition(), "String"));
         Came.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsCame()? 1:0 , "Boolean"));
         Wait.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsWait()? 1:0, "Boolean"));
+
+        Time.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().getTime(), "Time"));
     }
 
     private void SetHadlersAndListeners()
