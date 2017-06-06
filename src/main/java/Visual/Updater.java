@@ -258,6 +258,7 @@ public class Updater{
     {
         if(Addr!=null)
         {
+        	new Sound(Updater.class.getResourceAsStream("/Morti.wav")).play();
             SendCommand("DeletePerson");
             SendObject(name);
         }

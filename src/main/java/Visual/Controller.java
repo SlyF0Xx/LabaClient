@@ -461,7 +461,18 @@ public class Controller {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Предупреждение!");
         alert.setHeaderText(null);
-        new Sound(Laba0.class.getResourceAsStream("/attention.wav")).play();
+        int val = (int)(Math.random()*10);
+        Sound s;
+        switch(val){
+        case 0:{
+        	s = new Sound(Laba0.class.getResourceAsStream("/attention.wav"));
+        	break;
+        }
+        default:{
+        	s = new Sound(Laba0.class.getResourceAsStream("/Delete.wav"));
+        }
+        }
+        s.play();
         alert.contentTextProperty().bind(SupportI18n.createStringBinding(key));
         alert.showAndWait();
     }
