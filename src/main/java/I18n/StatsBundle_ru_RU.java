@@ -12,6 +12,8 @@ public class StatsBundle_ru_RU extends ListResourceBundle {
                 { "Boolean", new String( "{0, choice, 0#нет | 1#да }")},
                 { "Integer", new String( "{0}")},
                 { "String", new String( "{0}")},
+                { "Time", new String( "{0}")},
+
                 { "LegSizeEnum", new String( "{0, choice, 0#Маленькие | 1#Средние| 2#Большие}")},
 
                 { "true", new String( "да")},
@@ -25,7 +27,7 @@ public class StatsBundle_ru_RU extends ListResourceBundle {
 
                 { "FileNotFound", new String("Файл не найден") },
                 { "InputJSON", new String("Введите в поле ввода элеенты в json и убедитесь в наличии соотвествующего файла и установки переменной среды окружения ReadFileDir") },
-                { "CannotCreateObject", new String("Невозможно создать объект класса. Возмжно, класс не имеет конструктора без параметров. Убедитесь в корректности файла") },
+                { "CannotCreateObject", new String("Невозможно создать объект класса. Убедитесь в корректности данных") },
                 { "AccessObjectDeny", new String("Невозможно создать объект класса. Возмжно, класс не имеет конструктора без параметров. Убедитесь в корректности файла") },
                 { "ClassNotFound", new String("Класс не найден. Объекты данного класа не поддерживаются программой!") },
                 { "UnknownException", new String("Неопознанная ошибка") },
@@ -48,14 +50,14 @@ public class StatsBundle_ru_RU extends ListResourceBundle {
                 { "SelecetCommand", new String("Выберите команду") },
                 { "Execute", new String("Выполнить") },
 
-                { "MenuCame", new String("Фильтровать") },
-                { "MenuWait", new String("Фильтровать") },
-                { "MenuActions", new String("Фильтровать") },
+                { "MenuCame", new String("Прийти") },
+                { "MenuWait", new String("Ожидать") },
+                { "MenuActions", new String("Действовать") },
 
-                { "ButtonDelete", new String("Фильтровать") },
+                { "ButtonDelete", new String("Истребить") },
 
                 { "Filter", new String("Фильтровать") },
-
+                { "TimeColumn", new String( "Время")},
                 { "FilterChoose", new String("Выберите фильтры") },
                 { "FilterName", new String("Имя") },
                 { "FilterLocation", new String("Местоположение") },

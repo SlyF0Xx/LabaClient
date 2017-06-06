@@ -13,6 +13,7 @@ public class StatsBundle_nn_NO extends ListResourceBundle {
                 { "Integer", new String( "{0}")},
                 { "String", new String( "{0}")},
                 { "LegSizeEnum", new String( "{0, choice, 0#liten | 1#gjennomsnittlig| 2#stor}")},
+                { "Time", new String( "{0}")},
 
                 { "true", new String( "ja")},
                 { "false", new String( "ikke")},
@@ -55,7 +56,7 @@ public class StatsBundle_nn_NO extends ListResourceBundle {
                 { "ButtonDelete", new String("Slett") },
 
                 { "Filter", new String("filter") },
-
+                { "TimeColumn", new String( "tid")},
                 { "FilterChoose", new String("velg filtre") },
                 { "FilterName", new String("navn") },
                 { "FilterLocation", new String("plassering") },

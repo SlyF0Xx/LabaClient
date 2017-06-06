@@ -1,15 +1,5 @@
 package Visual;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import Cmd.Command;
 import Cmd.Commands;
 import Cmd.Exit;
@@ -18,6 +8,9 @@ import Laba2.Laba0;
 import Laba2.Leg;
 import Laba2.Person;
 import Laba2.Reciver;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,21 +21,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 public class Controller {
     @FXML
@@ -80,6 +68,9 @@ public class Controller {
 
     @FXML
     private TableColumn<VisualPerson, MenuButton> Actions;
+
+    @FXML
+    private TableColumn<VisualPerson, String> Time;
 
     @FXML
     private ComboBox<Command> BoxCommands;
@@ -268,6 +259,8 @@ public class Controller {
         };
         });
 
+        Time.setCellFactory(TextFieldTableCell.<VisualPerson>forTableColumn());
+
 
         CreateRowButtonDelete();
 
@@ -294,6 +287,8 @@ public class Controller {
         LocationName.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().GetPlace().GetPosition(), "String"));
         Came.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsCame()? 1:0 , "Boolean"));
         Wait.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().IsWait()? 1:0, "Boolean"));
+
+        Time.setCellValueFactory(cellData -> GetVisualParametr(cellData.getValue().getPerson().getTime(), "Time"));
     }
 
     private void SetHadlersAndListeners()
@@ -429,7 +424,7 @@ public class Controller {
     {
         FXMLLoader loader = new FXMLLoader();
 
-        loader.setLocation(getClass().getResource("../Filter.fxml"));
+        loader.setLocation(getClass().getResource("/Filter.fxml"));
 
         Parent root = null;
         try {
@@ -544,7 +539,7 @@ public class Controller {
             NewElement("Laba2.FrekenBok "+"{\"Legs\":[" +
                 Legs +
                 "],\"Place\":{\"Position\":\"" + String.valueOf(Math.random()) +
-                    "\"},\"Name\":\"" + (char)(Math.random()*256) +
+                    "\"},\"Name\":\"" + (char)('a' + Math.random()*26) +
                     "\",\"Came\":" + String.valueOf(Math.random() >0.5? true : false) +
                     ",\"wait\":" + String.valueOf(Math.random() >0.5? true : false) +
                     "}");
